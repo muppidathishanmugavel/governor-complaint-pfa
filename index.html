@@ -111,6 +111,26 @@ details.letter[open] summary .chev{transform:rotate(180deg);}
 footer{padding:26px 20px 40px;text-align:center;}
 footer p{font-size:11.5px;color:#647065;margin:4px 0;}
 
+/* ── Email modal ── */
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;align-items:center;justify-content:center;padding:16px;}
+.modal-backdrop.open{display:flex;}
+.modal-box{background:#fff;border-radius:16px;width:100%;max-width:560px;max-height:92vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3);}
+.modal-head{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;}
+.modal-head h3{margin:0;font-size:16px;font-family:'Noto Serif Tamil',serif;}
+.modal-close{background:none;border:none;font-size:20px;cursor:pointer;color:#666;padding:4px 8px;border-radius:6px;}
+.modal-close:hover{background:#f0f0f0;}
+.modal-body{padding:14px 18px;flex:1;overflow-y:auto;}
+.modal-letter{width:100%;min-height:260px;border:1.5px solid var(--line);border-radius:8px;padding:12px;font-size:13px;
+  font-family:'Noto Sans Tamil',sans-serif;line-height:1.7;resize:vertical;color:var(--ink);background:#fafafa;}
+.modal-steps{margin:14px 0 0;padding:0;list-style:none;}
+.modal-steps li{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;font-size:13.5px;color:#2c352f;}
+.modal-steps li .num{flex:none;width:22px;height:22px;border-radius:50%;background:var(--moss);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px;}
+.modal-foot{padding:14px 18px;border-top:1px solid var(--line);display:flex;gap:10px;flex-wrap:wrap;}
+.modal-foot .btn{flex:1;min-width:140px;padding:12px 14px;font-size:14px;}
+.btn-copy{background:var(--moss);color:#fff;box-shadow:0 3px 0 #3d5c3f;}
+.btn-copy:active{box-shadow:0 1px 0 #3d5c3f;}
+.btn-copy.copied{background:#2e7d32;}
+
 /* hidden print templates, rendered off-screen for html2canvas capture */
 .print-template{position:fixed;top:0;left:-9999px;width:794px;background:#fff;padding:60px 56px;color:#111;
   font-family:'Noto Serif Tamil','Noto Serif',serif;font-size:16px;line-height:1.85;white-space:pre-wrap;}
@@ -229,6 +249,26 @@ footer p{font-size:11.5px;color:#647065;margin:4px 0;}
 <!-- Hidden A4 templates rendered off-screen for PDF capture -->
 <div class="print-template ta" id="tplTa"></div>
 <div class="print-template en" id="tplEn"></div>
+
+<!-- Email modal -->
+<div class="modal-backdrop" id="emailModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3>✉️ ஆளுநருக்கு மின்னஞ்சல் அனுப்பு</h3>
+      <button class="modal-close" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13px;color:#3a453d;margin:0 0 10px;">
+        கீழே உள்ள முழு மனு தயாராக உள்ளது. <b>படி 1</b> — Copy அழுத்தவும். <b>படி 2</b> — Gmail திறக்கவும். <b>படி 3</b> — Gmail Body-ல் கிளிக் செய்து <kbd style="background:#eee;border:1px solid #bbb;padding:1px 6px;border-radius:4px;font-family:monospace;font-size:12px;">Ctrl + V</kbd> அழுத்தி ஒட்டவும். <b>படி 4</b> — Send!
+      </p>
+      <textarea class="modal-letter" id="modalLetter" readonly></textarea>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-copy" id="modalCopyBtn" type="button">📋 படி 1 — மனுவை Copy செய்</button>
+      <button class="btn btn-email" id="modalGmailBtn" type="button" style="margin-top:0;">✉️ படி 2 — Gmail திற &amp; Paste செய்</button>
+    </div>
+  </div>
+</div>
 
 <script>
 const LETTER_TA = `மாண்புமிகு தமிழ்நாடு ஆளுநர் அவர்களுக்கு,
@@ -565,50 +605,67 @@ $('downloadBtn').addEventListener('click', async ()=>{
   }
 });
 
-/* ── Email to Governor ── */
-$('emailBtn').addEventListener('click', async ()=>{
+/* ── Email to Governor — Modal flow ── */
+let _gmailURL = '';
+
+$('emailBtn').addEventListener('click', ()=>{
   const data = getFormData();
   if(!data) return;
 
   const subjectTa = 'புகார் மனு: மேலப்பாளையம் தெருநாய் கொடுமை — உடனடி நடவடிக்கை கோரிக்கை';
   const subjectEn = 'Complaint: Cruelty to Street Dogs in Melapalayam, Tirunelveli — Request for Immediate Action';
-
   const subject = currentLang === 'ta' ? subjectTa : subjectEn;
+
   // Full complaint letter
   const tpl  = currentLang === 'ta' ? LETTER_TA : LETTER_EN;
   const body = fillTemplate(tpl, data);
 
-  // Step 1: Copy full letter to clipboard
-  let copied = false;
-  try {
-    await navigator.clipboard.writeText(body);
-    copied = true;
-  } catch(e) {
-    // Fallback: select from a hidden textarea
-    const ta = document.createElement('textarea');
-    ta.value = body;
-    ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;';
-    document.body.appendChild(ta);
-    ta.focus(); ta.select();
-    try { document.execCommand('copy'); copied = true; } catch(e2){}
-    document.body.removeChild(ta);
-  }
-
-  // Step 2: Open Gmail compose with only To + Subject (no body — avoids 413 error)
-  const gmailURL = 'https://mail.google.com/mail/?view=cm&fs=1'
+  // Store Gmail URL (To + Subject only — no body in URL to avoid 413)
+  _gmailURL = 'https://mail.google.com/mail/?view=cm&fs=1'
     + '&to=' + encodeURIComponent(GOVERNOR_EMAIL)
     + '&su=' + encodeURIComponent(subject);
 
-  window.open(gmailURL, '_blank');
-
-  // Step 3: Show paste instruction
-  incrementCounter();
-  $('emailSuccessBox').style.display = 'block';
-  $('emailSuccessBox').innerHTML = copied
-    ? '✅ <b>முழு மனு clipboard-ல் நகலெடுக்கப்பட்டது!</b> Gmail புதிய Tab-ல் திறக்கப்பட்டது.'
-      + ' Gmail-ல் Body பகுதியில் கிளிக் செய்து <kbd style="background:#eee;border:1px solid #ccc;padding:1px 5px;border-radius:3px;font-family:monospace">Ctrl + V</kbd> அழுத்தி ஒட்டவும். பின்னர் <b>Send</b> அழுத்தவும்!'
-    : '⚠️ Gmail திறக்கப்பட்டது. மனுவை கீழே உள்ள "மனுவின் முழு உரையைப் படிக்க" பகுதியில் இருந்து நகலெடுத்து Body-ல் ஒட்டவும்.';
+  // Show modal with letter pre-filled
+  $('modalLetter').value = body;
+  $('emailModal').classList.add('open');
+  $('modalCopyBtn').textContent = '📋 படி 1 — மனுவை Copy செய்';
+  $('modalCopyBtn').classList.remove('copied');
 });
+
+// Copy button inside modal
+$('modalCopyBtn').addEventListener('click', async ()=>{
+  const text = $('modalLetter').value;
+  let copied = false;
+  try {
+    await navigator.clipboard.writeText(text);
+    copied = true;
+  } catch(e) {
+    // fallback: select textarea text
+    $('modalLetter').select();
+    try { document.execCommand('copy'); copied = true; } catch(e2){}
+  }
+  if(copied){
+    $('modalCopyBtn').textContent = '✅ நகலெடுக்கப்பட்டது! இப்போது படி 2 அழுத்தவும்';
+    $('modalCopyBtn').classList.add('copied');
+  }
+});
+
+// Gmail button inside modal
+$('modalGmailBtn').addEventListener('click', ()=>{
+  window.open(_gmailURL, '_blank');
+  incrementCounter();
+  $('emailModal').classList.remove('open');
+  $('emailSuccessBox').style.display = 'block';
+  $('emailSuccessBox').innerHTML =
+    '✅ Gmail திறக்கப்பட்டது! Gmail Body-ல் கிளிக் செய்து '
+    + '<kbd style="background:#d0e8ff;border:1px solid #90bfe0;padding:1px 7px;border-radius:4px;font-family:monospace;font-size:12px;">Ctrl + V</kbd>'
+    + ' அழுத்தி மனுவை ஒட்டவும். பின்னர் <b>Send</b> அழுத்தவும்!'
+    + '<br><small style="opacity:.75">மீண்டும் Copy வேண்டுமா? மேலே உள்ள "Gmail மூலம் அனுப்ப" பொத்தானை அழுத்தவும்.</small>';
+});
+
+// Close modal
+$('modalClose').addEventListener('click', ()=>{ $('emailModal').classList.remove('open'); });
+$('emailModal').addEventListener('click', (e)=>{ if(e.target === $('emailModal')) $('emailModal').classList.remove('open'); });
 
 /* ── Copy address ── */
 $('copyAddr').addEventListener('click', async ()=>{
