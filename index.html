@@ -180,15 +180,15 @@ footer p{font-size:11.5px;color:#647065;margin:4px 0;}
       <div class="action-divider">அல்லது</div>
 
       <!-- Email Button -->
-      <button class="btn btn-email" id="emailBtn" type="button">✉️ மின்னஞ்சல் மூலம் ஆளுநருக்கு அனுப்ப</button>
-      <div class="email-success-box" id="emailSuccessBox">📨 உங்கள் மின்னஞ்சல் பயன்பாடு திறக்கப்படும். <b>govtam@nic.in</b> என்ற முகவரிக்கு மனு அனுப்பவும். PDF-ஐ இணைத்து <b>Send</b> பொத்தானை அழுத்தவும்!</div>
+      <button class="btn btn-email" id="emailBtn" type="button">✉️ Gmail மூலம் ஆளுநருக்கு அனுப்ப</button>
+      <div class="email-success-box" id="emailSuccessBox">✅ Gmail கம்போஸ் புதிய Tab-ல் திறக்கப்படும். To: govtam@nic.in தானாக நிரப்பப்படும். PDF-ஐ Attach செய்து Send அழுத்தவும்.</div>
     </div>
 
     <!-- Governor email info -->
     <div class="email-info-card">
       <b>🏛️ ஆளுநர் மாளிகை — மின்னஞ்சல் முகவரி</b>
       தமிழ்நாடு ஆளுநர் செயலக மின்னஞ்சல்: <a href="mailto:govtam@nic.in">govtam@nic.in</a><br>
-      <span style="font-size:12px;color:#3a5a8e;">Speed Post மற்றும் மின்னஞ்சல் — இரண்டு வழிகளிலும் அனுப்புவது அதிக பலன் தரும்.</span>
+      <span style="font-size:12px;color:#3a5a8e;">Speed Post மற்றும் Gmail — இரண்டு வழிகளிலும் அனுப்புவது அதிக பலன் தரும்.</span>
     </div>
 
     <details class="letter">
@@ -570,8 +570,6 @@ $('emailBtn').addEventListener('click', ()=>{
   const data = getFormData();
   if(!data) return;
 
-  // Keep email body SHORT — full letter is too long for mailto URL limits (~2000 chars).
-  // We send a concise cover note; user should attach the downloaded PDF.
   const subjectTa = 'புகார் மனு: மேலப்பாளையம் தெருநாய் கொடுமை — உடனடி நடவடிக்கை கோரிக்கை';
   const subjectEn = 'Complaint: Cruelty to Street Dogs in Melapalayam, Tirunelveli — Request for Immediate Action';
 
@@ -615,25 +613,23 @@ Thank you.`;
   const subject = currentLang === 'ta' ? subjectTa : subjectEn;
   const body    = currentLang === 'ta' ? bodyTa    : bodyEn;
 
-  const mailtoLink = 'mailto:' + GOVERNOR_EMAIL
-    + '?subject=' + encodeURIComponent(subject)
+  // ── Gmail web compose URL (opens directly in browser — no desktop mail app needed) ──
+  const gmailURL = 'https://mail.google.com/mail/?view=cm&fs=1'
+    + '&to='      + encodeURIComponent(GOVERNOR_EMAIL)
+    + '&su='      + encodeURIComponent(subject)
     + '&body='    + encodeURIComponent(body);
 
-  // Use a temporary anchor click — more reliable than window.location.href
-  // especially in browsers that block mailto navigation from scripts.
-  const a = document.createElement('a');
-  a.href = mailtoLink;
-  a.target = '_blank';   // some browsers prefer _blank for mailto
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+  // Open Gmail compose in a new tab
+  window.open(gmailURL, '_blank');
 
   incrementCounter();
   $('emailSuccessBox').style.display = 'block';
   $('emailSuccessBox').innerHTML =
-    '📨 உங்கள் மின்னஞ்சல் பயன்பாடு திறக்கப்படும். <b>govtam@nic.in</b> என்ற முகவரிக்கு மனு அனுப்பவும்.'
-    + ' PDF-ஐ இணைத்து <b>Send</b> பொத்தானை அழுத்தவும்!'
-    + '<br><small style="color:#555;">திறக்கவில்லையா? <a href="' + mailtoLink + '">இங்கே கிளிக் செய்யவும்</a>.</small>';
+    '✅ Gmail கம்போஸ் புதிய Tab-ல் திறக்கப்பட்டுள்ளது!'
+    + ' <b>To:</b> govtam@nic.in தானாக நிரப்பப்பட்டுள்ளது.'
+    + ' PDF-ஐ Attach செய்து <b>Send</b> அழுத்தவும்.'
+    + '<br><small style="opacity:.75">Gmail திறக்கவில்லையா? '
+    + '<a href="' + gmailURL + '" target="_blank" style="color:#1a73e8;">இங்கே கிளிக் செய்யவும்</a></small>';
 });
 
 /* ── Copy address ── */
