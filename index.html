@@ -181,7 +181,7 @@ footer p{font-size:11.5px;color:#647065;margin:4px 0;}
 
       <!-- Email Button -->
       <button class="btn btn-email" id="emailBtn" type="button">✉️ Gmail மூலம் ஆளுநருக்கு அனுப்ப</button>
-      <div class="email-success-box" id="emailSuccessBox">✅ Gmail கம்போஸ் புதிய Tab-ல் திறக்கப்படும். To: govtam@nic.in தானாக நிரப்பப்படும். PDF-ஐ Attach செய்து Send அழுத்தவும்.</div>
+      <div class="email-success-box" id="emailSuccessBox">✅ Gmail கம்போஸ் புதிய Tab-ல் திறக்கப்படும். முழு புகார் மனுவும் தானாக நிரப்பப்படும். Send அழுத்தவும்!</div>
     </div>
 
     <!-- Governor email info -->
@@ -573,62 +573,25 @@ $('emailBtn').addEventListener('click', ()=>{
   const subjectTa = 'புகார் மனு: மேலப்பாளையம் தெருநாய் கொடுமை — உடனடி நடவடிக்கை கோரிக்கை';
   const subjectEn = 'Complaint: Cruelty to Street Dogs in Melapalayam, Tirunelveli — Request for Immediate Action';
 
-  const bodyTa =
-`மாண்புமிகு தமிழ்நாடு ஆளுநர் அவர்களுக்கு,
-
-வணக்கம்.
-
-நான் ${data.name}, திருநெல்வேலி மேலப்பாளையம் பகுதியில் தெருநாய்கள் மற்றும் நாய்க்குட்டிகள் மீதான தொடர்ச்சியான கொடுமைகள் குறித்து புகார் அனுப்புகிறேன்.
-
-விரிவான புகார் மனு இணைக்கப்பட்டுள்ளது (PDF). உடனடி விசாரணை மற்றும் நடவடிக்கை எடுக்க வேண்டுகிறேன்.
-
-அனுப்புநர்:
-${data.name}
-${data.address}
-தொடர்பு: ${data.mobile || '—'}
-தேதி: ${data.date}
-இடம்: ${data.place}
-
-நன்றி.`;
-
-  const bodyEn =
-`To,
-The Hon'ble Governor of Tamil Nadu,
-
-Respected Governor,
-
-I, ${data.name}, am writing to bring to your attention the continuing cruelty against street dogs and puppies in Melapalayam, Tirunelveli.
-
-The detailed complaint petition is attached (PDF). I request an immediate inquiry and necessary action.
-
-From:
-${data.name}
-${data.address}
-Contact: ${data.mobile || '—'}
-Date: ${data.date}
-Place: ${data.place}
-
-Thank you.`;
-
   const subject = currentLang === 'ta' ? subjectTa : subjectEn;
-  const body    = currentLang === 'ta' ? bodyTa    : bodyEn;
+  // Send the FULL complaint letter as the email body
+  const tpl  = currentLang === 'ta' ? LETTER_TA : LETTER_EN;
+  const body = fillTemplate(tpl, data);
 
-  // ── Gmail web compose URL (opens directly in browser — no desktop mail app needed) ──
+  // Gmail web compose URL — handles long bodies unlike mailto:
   const gmailURL = 'https://mail.google.com/mail/?view=cm&fs=1'
-    + '&to='      + encodeURIComponent(GOVERNOR_EMAIL)
-    + '&su='      + encodeURIComponent(subject)
-    + '&body='    + encodeURIComponent(body);
+    + '&to='   + encodeURIComponent(GOVERNOR_EMAIL)
+    + '&su='   + encodeURIComponent(subject)
+    + '&body=' + encodeURIComponent(body);
 
-  // Open Gmail compose in a new tab
   window.open(gmailURL, '_blank');
 
   incrementCounter();
   $('emailSuccessBox').style.display = 'block';
   $('emailSuccessBox').innerHTML =
-    '✅ Gmail கம்போஸ் புதிய Tab-ல் திறக்கப்பட்டுள்ளது!'
-    + ' <b>To:</b> govtam@nic.in தானாக நிரப்பப்பட்டுள்ளது.'
-    + ' PDF-ஐ Attach செய்து <b>Send</b> அழுத்தவும்.'
-    + '<br><small style="opacity:.75">Gmail திறக்கவில்லையா? '
+    '✅ Gmail கம்போஸ் புதிய Tab-ல் திறக்கப்பட்டுள்ளது! முழு புகார் மனுவும் தானாக நிரப்பப்பட்டுள்ளது.'
+    + ' <b>Send</b> பொத்தானை அழுத்தவும்.'
+    + '<br><small style="opacity:.75">திறக்கவில்லையா? '
     + '<a href="' + gmailURL + '" target="_blank" style="color:#1a73e8;">இங்கே கிளிக் செய்யவும்</a></small>';
 });
 
