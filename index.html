@@ -26,7 +26,8 @@ a{color:var(--amber-dark);}
 .topbar{display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--line);
   position:sticky;top:0;background:rgba(245,241,230,.92);backdrop-filter:blur(4px);z-index:20;
   padding-top:calc(16px + env(safe-area-inset-top,0px));}
-.mark{width:32px;height:32px;flex:none;border-radius:50%;background:var(--amber);display:flex;align-items:center;justify-content:center;font-size:16px;}
+.mark{width:48px;height:48px;flex:none;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid var(--line);}
+.mark img{width:44px;height:44px;object-fit:contain;}
 .brand{font-family:'Noto Serif Tamil',serif;font-weight:700;font-size:14.5px;}
 .brand small{display:block;font-family:'Noto Sans Tamil',sans-serif;font-weight:400;font-size:11px;color:var(--moss);}
 
@@ -67,8 +68,17 @@ section p{font-size:14.5px;color:#2c352f;}
 .btn-primary:active{box-shadow:0 1px 0 var(--amber-dark);}
 .btn-primary:disabled{opacity:.6;}
 .btn-outline{background:transparent;color:var(--ink);border:1.5px solid var(--line);}
+.btn-email{background:#1a73e8;color:#fff;box-shadow:0 3px 0 #0d5bca;margin-top:10px;}
+.btn-email:active{box-shadow:0 1px 0 #0d5bca;}
+.btn-email:disabled{opacity:.6;}
+
+/* Divider between buttons */
+.action-divider{display:flex;align-items:center;gap:10px;margin:12px 0;font-size:12px;color:#8a9a8d;}
+.action-divider::before,.action-divider::after{content:'';flex:1;height:1px;background:var(--line);}
 
 .success-box{display:none;background:rgba(92,122,94,.1);border:1px solid rgba(92,122,94,.35);color:#33452f;
+  border-radius:10px;padding:13px 14px;font-size:13.5px;margin-top:14px;line-height:1.6;}
+.email-success-box{display:none;background:rgba(26,115,232,.08);border:1px solid rgba(26,115,232,.3);color:#0d47a1;
   border-radius:10px;padding:13px 14px;font-size:13.5px;margin-top:14px;line-height:1.6;}
 
 details.letter{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:16px;}
@@ -92,6 +102,12 @@ details.letter[open] summary .chev{transform:rotate(180deg);}
 
 .chip-btn{font-size:12px;padding:7px 11px;border-radius:100px;border:1px solid var(--line);background:#fff;cursor:pointer;color:#3a453d;}
 
+/* Governor email info box */
+.email-info-card{background:rgba(26,115,232,.06);border:1px solid rgba(26,115,232,.22);border-radius:12px;
+  padding:13px 16px;margin-top:16px;font-size:13px;color:#1a3a6e;}
+.email-info-card b{display:block;margin-bottom:4px;font-size:13.5px;}
+.email-info-card a{color:#1a73e8;font-weight:600;}
+
 footer{padding:26px 20px 40px;text-align:center;}
 footer p{font-size:11.5px;color:#647065;margin:4px 0;}
 
@@ -104,7 +120,9 @@ footer p{font-size:11.5px;color:#647065;margin:4px 0;}
 <body>
 
 <div class="topbar">
-  <div class="mark">🐾</div>
+  <div class="mark">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAL8AAABFCAYAAAAb4zd5AAAQAElEQVR4AeydCbxP1RbHf/t/R8MdzDKrlDkNMqTcSIYUIbxKIYkGSdFcNCINxnoiU4beQ1RmT0RCyFSGCCFJuLhcd/y/8906+rvvXu6f23uvnPu567/P2XvtffZZe+2111p7OD6/9+dR4AKlgE/en0eBC5QCHvNfoA3vvbbkMb/HBRcsBTzmv2Cb3ntxj/lP4wHv5kKigMf859HaKSkp2rt3rxxniS0lMTFR6enp9vpsP+DFH0/S1l+P6audhzVtw88at3KvRq74ScOX7dG4VXs1Z+N+7dq9WzfeGKf9+/efrUgvPUgKeMwfJMFA//HHH7Vo0SLt27dPzZo127Zt25ScnKyXXnpJy5cvByVLSExK1uLNe/X43F1q++kBNZmdpJsW+tVqeW7dtylaXTfH6JEfYtVx3Be6/b5n9EDP57R61Wq98847pzpZloV7CUFRwGP+IMiFhAd+/vlnxcXFad++fWrWrJm2bdumH374QWPGjNHy5ctByRISk5K1ePNePT53l9p+ekBNZifppoV+tVqeW/dtilbXzTF65IdYdRz3hW6/7xk90PM5rV61Wm+++eapTpZl4V5CUBTwmD8IcvXq1UuvvvqqOnXqpNKlS6t+/foqV66c7rjjDl177bXavn272rVrp5EjR9qwRx55RC1bttR1112nvn37av78+apSpYrmzZun+vXr6+abb9b27dvVoUMHe3706NEqXbq0ypcvr8aNG2vFihXKycmxXkWKFFGRIkWUlZWloUOHqnbt2po7d64kqXnz5mrXrp2KFy9u/aZNm2bbjB49WrGxsapUqZJmzpyp6tWr2/PPPvvMdXMrJ0mSMnv37q2wsDA9/fTTkqQ777xTkvT000+rVKlS9v3q1as1ceJEJScnS5KmTJmiffv2SZKmT5+u3bt3S5LKlSsnSTp27JgkqV69eoqOjlZ4eLgk6cCBA0pLS5MkFSpUSIcPH1bVqlUlSUWLFlXJkiX1/PPP6/jx46pbt65q1qyp0aNHa9iwYUpLS5MkvfTSSzp58qTOnTunOnXq6IorrlCtWrU0efJk1a1bV4mJiZKkd955R8WKFVPNmjWVl5en66+/XpK0fft2FS5cWBUrVtTKlSsVHh6uYsWKacuWLVq2bJmioqIkSQcPHlR6errKlCmjzMxMVa5cWTVr1lTt2rU1aNAgLV++XFu3blVERIR27dqlKlWqSJJOnTqlEydOqFKlSpKkzMxMlS1bVn/++aeqVKmixMRESVKJEiVUuXJllStXTsuWLZMklSxZUoUKFVJqaqoqVaqksmXLavDgwVqzZo2WLFmi2NhY7dy5U3l5eZKk+Ph4nT59Wvv37zcfnTt3TsWLF5ckxcXFqUyZMoqIiFBMTIzy8/N17tw5SdKGDRu0bNkyxcbGasOGDTpy5IgkKT8/X3l5edq9e7fuuOMOHTt2TEVHR+vgwYNKSkqSJMXFxWnJkiVKTk5WamqqZs6cqdWrV6tYsWJKSUlR//79VaBAAfXp00fDhw/X119/raSkJEVFRalixYrKy8vT8ePHtWXLFuXm5iqvaFEdO3ZMhQsXliRlZ2erQoUKkqRXX31V9evXV/v27fXjjz8qKipK1apVU2xsrJKTk3X48GE1a9ZMR44c0YkTJ3T27FmlpaVJknJyctSuXTtVrFhR+/btU3JysqpVqyZJmjBhguLi4rRnzx6r0b59+1SqVCklJiaqVatWio+P1+HDh5WamqrMzEx9/vnn2rVrl/bt26fSpUtLkuLj4yVJGzdulCRVrlxZGRkZSkxM1J9//qmcnBwlJiaqatWqKl++vBITE5WXl6eiRYsqNjZW4eHhSk9PV7du3XTXXR8dq9atW6sPP/xQZcqUUY0aNTRgwAA1a9ZMO3bsULdu3bRkyRL17t1bderUUYUKFVSkSBGtWLFC0dHRmjhxovbv36/09HRJ0ubNm1WwYEEVKFBAs2bNUlpamurVq6fDhw+rbt26Klu2rBo3bqwdO3bo9ddfV7ly5ZSWlqajR49KktLT01WlShU9/fTT+u6773To0CEdO3ZM9erVkyRdeeWVKl++vI4ePaqYmBidOXNGhw4dsiogSevXr1efPn106NAhJScn69SpU5KkN998U126dNHZs2ctUC1btsxCvW3bNi1dulSStHr1au3fv18xMTH64osvVKJECd1+++26++679f7772vDhg0666yz7JwNGzbooYceUm5uro4cOaIpU6aoePHiqlGjhj744ANNnDhRlSpV0ocffqjdu3dr/vz5Klu2rPbv36+lS5dq6tSpyszMVPv27TV37lwlJCRoz549kiTH0YcffmjlS5IqVaqkuXPnKj8/X1FRUbrvvvsUExNjRr9///5KTU1VzZo1lZ+fb/dDkiRJW7du1f79++2mSJIkaejQoVq+fLnatm2rK6+8UqdPn9bChQsVHR2trl27KiMjQ7GxsTpx4oSkM4VPnDihTZs2afLkyXruuef05ptvbj148KAyMjKUmJioJk2a2MPj4+OVlpYmSapTp4727dunGTNmaOXKlSpevLhq1aqlFStWqGzZsoqOjtaZM2eUlJSkQ4cOaffu3brvvvuswa+88kqNHj3anqlp06YpJiZG27dvl8+n/fv3S5IqVqyoI0eOqH79+jpz5owWLFigzMxMValSRQkJCZKkI0eOKDY2VocPH9bKlSsVHx+vwoULKy8vT5UrV1ZeXp5WrVqlqKgoRUZGql69esrNzdXp06eVl5en7du3KzMzUwkJCVq3bp1SU1N16tQpnT9/XikpKUpJSVF2drZlP378uHJzc1WhQgVlZmZq27ZtatSokTIzM7Vz506lp6crKipKDRs21LZt2yz4K1euqGjRovLy+LhjB5SanRqpVq2afBelpaWqjpwqiLJJvTx6jTqEO8Jyq4WuNUoT6xCVYd+FQVz0s6tHoSiqHk0jbUVFSqeEjqIlnWQSXEQbgK3K4mFHB3n/X52oMgEHHMTIoFKXVAIFiJMi6JYggXQSPPCYQrTMlwONEt+NQtOuNENS8cXANW+oJjlixizPLR1g8EuCxvCg09VaCGOj62k5bwS7piUSiqHfkJHKAFOWRhE6ov5jOv2ixjy1EAIAvO2bH/lq5O3TkJLCMlJOB6G7LKcQVBYY6RADMJbqwJLrXLiMWw+tHb0S73MEPg7sLs0MnGl4TKg0K5ueT/8uGRMEgWFmFAb8ICiGEhVeF5SZigBiHqS5dZAAAAAElFTkSuQmCC" alt="PFA Logo">
+  </div>
   <div class="brand">PFA திருநெல்வேலி<small>ஆளுநருக்கு புகார் மனு</small></div>
 </div>
 
@@ -112,7 +130,7 @@ footer p{font-size:11.5px;color:#647065;margin:4px 0;}
   <div class="wrap">
     <div class="hero-badge"><span class="dot"></span> மேலப்பாளையம் · அவசர புகார்</div>
     <h1>தெருநாய் கொடுமையை நிறுத்த ஆளுநருக்கு நேரடியாக புகார் அனுப்புங்கள்</h1>
-    <p class="lede">உங்கள் பெயரில் தனிப்பட்ட புகார் மனுவை உருவாக்கி PDF-ஆக பதிவிறக்கம் செய்யவும். பிரிண்ட் செய்து, இந்திய அஞ்சல் Speed Post மூலம் ஆளுநர் மாளிகைக்கு அனுப்பவும்.</p>
+    <p class="lede">உங்கள் பெயரில் தனிப்பட்ட புகார் மனுவை உருவாக்கி PDF-ஆக பதிவிறக்கம் செய்யவும் அல்லது மின்னஞ்சல் மூலம் ஆளுநர் மாளிகைக்கு நேரடியாக அனுப்பவும். Speed Post மூலமும் அனுப்பலாம்.</p>
 
     <div class="lang-toggle">
       <button class="lang-btn active" id="btnTa" type="button">தமிழ்</button>
@@ -122,6 +140,9 @@ footer p{font-size:11.5px;color:#647065;margin:4px 0;}
     <div class="recipient-card">
       <b>பெறுநர்</b>
       மாண்புமிகு தமிழ்நாடு ஆளுநர் அவர்கள்<br>ஆளுநர் மாளிகை, கிண்டி, சென்னை – 600022.
+      <div style="margin-top:8px;font-size:12px;color:#5a655e;">
+        📧 மின்னஞ்சல்: <a href="mailto:governor@tn.gov.in" style="color:#1a73e8;">governor@tn.gov.in</a>
+      </div>
     </div>
   </div>
 </div>
@@ -152,8 +173,22 @@ footer p{font-size:11.5px;color:#647065;margin:4px 0;}
       <div id="formErr" class="err">தயவுசெய்து பெயர், முகவரி, ஊர் ஆகியவற்றை நிரப்பவும்.</div>
       <div class="privacy-note">உங்கள் பெயர் / ஊர் மட்டும் கீழே உள்ள மொத்த எண்ணிக்கையில் சேர்க்கப்படும் — வேறு யாருக்கும் காட்டப்படாது. முகவரி PDF-ல் மட்டும் உள்ளது, இங்கு சேமிக்கப்படாது.</div>
 
+      <!-- PDF Download Button -->
       <button class="btn btn-primary" id="downloadBtn" type="button">📄 PDF பதிவிறக்கம் செய்ய</button>
-      <div class="success-box" id="successBox">PDF பதிவிறக்கம் ஆகிவிட்டது! கீழே உள்ள படிகளைப் பின்பற்றி அனுப்பவும். உங்கள் ஆதரவுக்கு நன்றி.</div>
+      <div class="success-box" id="successBox">✅ PDF பதிவிறக்கம் ஆகிவிட்டது! கீழே உள்ள படிகளைப் பின்பற்றி அனுப்பவும். உங்கள் ஆதரவுக்கு நன்றி.</div>
+
+      <div class="action-divider">அல்லது</div>
+
+      <!-- Email Button -->
+      <button class="btn btn-email" id="emailBtn" type="button">✉️ மின்னஞ்சல் மூலம் ஆளுநருக்கு அனுப்ப</button>
+      <div class="email-success-box" id="emailSuccessBox">📨 உங்கள் மின்னஞ்சல் பயன்பாடு திறக்கப்படும். governor@tn.gov.in என்ற முகவரிக்கு மனு அனுப்பவும். <b>Send</b> பொத்தானை அழுத்தவும்!</div>
+    </div>
+
+    <!-- Governor email info -->
+    <div class="email-info-card">
+      <b>🏛️ ஆளுநர் மாளிகை — மின்னஞ்சல் முகவரி</b>
+      தமிழ்நாடு ஆளுநர் அலுவலகம்: <a href="mailto:governor@tn.gov.in">governor@tn.gov.in</a><br>
+      <span style="font-size:12px;color:#3a5a8e;">Speed Post மற்றும் மின்னஞ்சல் — இரண்டு வழிகளிலும் அனுப்புவது அதிக பலன் தரும்.</span>
     </div>
 
     <details class="letter">
@@ -403,7 +438,9 @@ Contact number: {{MOBILE}}
 Date: {{DATE}}
 Place: {{PLACE}}`;
 
+const GOVERNOR_EMAIL = 'governor@tn.gov.in';
 let currentLang = 'ta';
+
 function $(id){ return document.getElementById(id); }
 
 function todayStr(){
@@ -439,51 +476,59 @@ $('btnEn').addEventListener('click', ()=>{
 });
 updatePreview();
 
-async function loadCounter(){
+/* ── Counter: use localStorage (works in any browser, no server needed) ── */
+const COUNTER_KEY = 'pfa_governor_complaint_count';
+
+function loadCounter(){
   try{
-    const res = await window.storage.get('governor_complaint_count', true);
-    $('counterNum').textContent = res ? res.value : '0';
-  }catch(e){ $('counterNum').textContent = '0'; }
+    const val = localStorage.getItem(COUNTER_KEY);
+    $('counterNum').textContent = val ? val : '0';
+  }catch(e){
+    $('counterNum').textContent = '0';
+  }
 }
-async function incrementCounter(){
+
+function incrementCounter(){
   try{
-    let count = 0;
-    try{
-      const res = await window.storage.get('governor_complaint_count', true);
-      count = res ? parseInt(res.value,10) || 0 : 0;
-    }catch(e){ count = 0; }
-    count += 1;
-    await window.storage.set('governor_complaint_count', String(count), true);
-    $('counterNum').textContent = String(count);
-  }catch(e){ console.error(e); }
+    const current = parseInt(localStorage.getItem(COUNTER_KEY) || '0', 10);
+    const next = current + 1;
+    localStorage.setItem(COUNTER_KEY, String(next));
+    $('counterNum').textContent = String(next);
+  }catch(e){ console.error('Counter error:', e); }
 }
+
 loadCounter();
 
-$('downloadBtn').addEventListener('click', async ()=>{
-  const name = $('fname').value.trim();
+/* ── Validate form fields, return data or null ── */
+function getFormData(){
+  const name    = $('fname').value.trim();
   const address = $('faddr').value.trim();
-  const place = $('fplace').value.trim();
-  const mobile = $('fmobile').value.trim();
-
+  const place   = $('fplace').value.trim();
+  const mobile  = $('fmobile').value.trim();
   if(!name || !address || !place){
     $('formErr').style.display = 'block';
-    return;
+    return null;
   }
   $('formErr').style.display = 'none';
+  return { name, address, mobile, date: todayStr(), place };
+}
+
+/* ── PDF Download ── */
+$('downloadBtn').addEventListener('click', async ()=>{
+  const data = getFormData();
+  if(!data) return;
 
   const btn = $('downloadBtn');
   btn.disabled = true;
   btn.textContent = '⏳ PDF தயாராகிறது...';
 
   try{
-    const data = {name, address, mobile, date: todayStr(), place};
     const tpl = currentLang === 'ta' ? LETTER_TA : LETTER_EN;
     const filled = fillTemplate(tpl, data);
     const container = currentLang === 'ta' ? $('tplTa') : $('tplEn');
     container.textContent = filled;
 
     await document.fonts.ready;
-    // small delay to ensure layout settles
     await new Promise(r => setTimeout(r, 150));
 
     const canvas = await html2canvas(container, {scale:2, backgroundColor:'#ffffff', useCORS:true});
@@ -506,10 +551,10 @@ $('downloadBtn').addEventListener('click', async ()=>{
       heightLeft -= pageHeight;
     }
 
-    const safeName = name.replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-+|-+$/g,'') || 'complaint';
+    const safeName = data.name.replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-+|-+$/g,'') || 'complaint';
     pdf.save(`Governor-Complaint-Melapalayam-${safeName}.pdf`);
 
-    await incrementCounter();
+    incrementCounter();
     $('successBox').style.display = 'block';
   }catch(e){
     console.error(e);
@@ -520,6 +565,30 @@ $('downloadBtn').addEventListener('click', async ()=>{
   }
 });
 
+/* ── Email to Governor ── */
+$('emailBtn').addEventListener('click', ()=>{
+  const data = getFormData();
+  if(!data) return;
+
+  const tpl = currentLang === 'ta' ? LETTER_TA : LETTER_EN;
+  const body = fillTemplate(tpl, data);
+
+  const subject = currentLang === 'ta'
+    ? 'புகார் மனு: மேலப்பாளையம் தெருநாய் கொடுமை — உடனடி நடவடிக்கை கோரிக்கை'
+    : 'Complaint: Cruelty to Street Dogs in Melapalayam, Tirunelveli — Request for Immediate Action';
+
+  // Build mailto link
+  const mailtoLink = `mailto:${GOVERNOR_EMAIL}`
+    + `?subject=${encodeURIComponent(subject)}`
+    + `&body=${encodeURIComponent(body)}`;
+
+  window.location.href = mailtoLink;
+
+  incrementCounter();
+  $('emailSuccessBox').style.display = 'block';
+});
+
+/* ── Copy address ── */
 $('copyAddr').addEventListener('click', async ()=>{
   try{
     await navigator.clipboard.writeText('மாண்புமிகு தமிழ்நாடு ஆளுநர் அவர்கள்\nஆளுநர் மாளிகை, கிண்டி, சென்னை – 600022.');
