@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ஆளுநருக்கு புகார் — தெருநாய் கொடுமை தடுப்பு | PFA திருநெல்வேலி</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Tamil:wght@500;600;700&family=Noto+Sans+Tamil:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{
+  --ink:#1E2A24; --paper:#F5F1E6; --paper-2:#EFE9D8; --card:#FFFDF8;
+  --amber:#C97A2B; --amber-dark:#A65E1C; --moss:#5C7A5E; --brick:#9C3B2E;
+  --line:rgba(30,42,36,0.14); --max:580px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Noto Sans Tamil',sans-serif;line-height:1.65;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);}
+h1,h2,h3{font-family:'Noto Serif Tamil',serif;font-weight:700;margin:0 0 .5em;line-height:1.3;}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 20px;}
+a{color:var(--amber-dark);}
+
+.topbar{display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--line);
+  position:sticky;top:0;background:rgba(245,241,230,.92);backdrop-filter:blur(4px);z-index:20;
+  padding-top:calc(16px + env(safe-area-inset-top,0px));}
+.mark{width:32px;height:32px;flex:none;border-radius:50%;background:var(--amber);display:flex;align-items:center;justify-content:center;font-size:16px;}
+.brand{font-family:'Noto Serif Tamil',serif;font-weight:700;font-size:14.5px;}
+.brand small{display:block;font-family:'Noto Sans Tamil',sans-serif;font-weight:400;font-size:11px;color:var(--moss);}
+
+.hero{padding:36px 20px 26px;}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--brick);background:rgba(156,59,46,.09);
+  border:1px solid rgba(156,59,46,.25);padding:5px 11px;border-radius:100px;margin-bottom:16px;}
+.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--brick);}
+.hero h1{font-size:24px;}
+.hero p.lede{font-size:15px;color:#3a463f;margin:0 0 20px;}
+
+.lang-toggle{display:flex;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:4px;gap:4px;margin-bottom:18px;}
+.lang-btn{flex:1;text-align:center;padding:9px 0;border-radius:9px;font-size:13.5px;font-weight:700;cursor:pointer;border:none;background:transparent;color:#5a655e;}
+.lang-btn.active{background:var(--amber);color:#fff;}
+
+section{padding:30px 20px;}
+section.alt{background:var(--paper-2);}
+.kicker{font-size:11.5px;color:var(--moss);font-weight:700;letter-spacing:.02em;margin-bottom:6px;}
+section h2{font-size:19px;}
+section p{font-size:14.5px;color:#2c352f;}
+
+.recipient-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:13.5px;color:#3a453d;}
+.recipient-card b{display:block;font-family:'Noto Serif Tamil',serif;font-size:14.5px;color:var(--ink);margin-bottom:3px;}
+
+.form-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:4px;}
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:#2b332d;}
+.field input, .field textarea{width:100%;padding:12px 13px;border-radius:9px;border:1.5px solid var(--line);
+  font-size:15px;font-family:'Noto Sans Tamil',sans-serif;background:#fff;color:var(--ink);resize:vertical;}
+.field input:focus, .field textarea:focus{outline:2px solid var(--amber);outline-offset:1px;border-color:var(--amber);}
+.err{color:var(--brick);font-size:12.5px;margin-top:6px;display:none;}
+.privacy-note{font-size:11.8px;color:#5a655e;margin:2px 0 16px;line-height:1.5;}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 18px;border-radius:10px;
+  font-family:'Noto Sans Tamil',sans-serif;font-size:15px;font-weight:700;text-decoration:none;cursor:pointer;border:none;
+  transition:transform .15s ease;width:100%;}
+.btn:active{transform:scale(.98);}
+.btn-primary{background:var(--amber);color:#fff;box-shadow:0 3px 0 var(--amber-dark);}
+.btn-primary:active{box-shadow:0 1px 0 var(--amber-dark);}
+.btn-primary:disabled{opacity:.6;}
+.btn-outline{background:transparent;color:var(--ink);border:1.5px solid var(--line);}
+
+.success-box{display:none;background:rgba(92,122,94,.1);border:1px solid rgba(92,122,94,.35);color:#33452f;
+  border-radius:10px;padding:13px 14px;font-size:13.5px;margin-top:14px;line-height:1.6;}
+
+details.letter{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:16px;}
+details.letter summary{cursor:pointer;font-weight:700;font-family:'Noto Serif Tamil',serif;font-size:14.5px;
+  list-style:none;display:flex;justify-content:space-between;align-items:center;}
+details.letter summary::-webkit-details-marker{display:none;}
+details.letter summary .chev{color:var(--amber-dark);transition:transform .2s ease;}
+details.letter[open] summary .chev{transform:rotate(180deg);}
+.letter-preview-body{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line);font-size:13px;white-space:pre-wrap;color:#293029;max-height:400px;overflow-y:auto;}
+
+.counter-row{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);
+  border-radius:14px;padding:16px;margin-top:18px;}
+.counter-num{font-family:'Noto Serif Tamil',serif;font-size:28px;color:var(--amber-dark);font-weight:700;}
+.counter-label{font-size:12.5px;color:#5a655e;}
+
+.step-list{counter-reset:step;list-style:none;margin:16px 0 0;padding:0;}
+.step-list li{display:flex;gap:12px;margin-bottom:12px;}
+.step-list li::before{counter-increment:step;content:counter(step);flex:none;width:24px;height:24px;border-radius:50%;
+  background:var(--moss);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.step-list p{margin:0;font-size:13.8px;color:#3a453d;}
+
+.chip-btn{font-size:12px;padding:7px 11px;border-radius:100px;border:1px solid var(--line);background:#fff;cursor:pointer;color:#3a453d;}
+
+footer{padding:26px 20px 40px;text-align:center;}
+footer p{font-size:11.5px;color:#647065;margin:4px 0;}
+
+/* hidden print templates, rendered off-screen for html2canvas capture */
+.print-template{position:fixed;top:0;left:-9999px;width:794px;background:#fff;padding:60px 56px;color:#111;
+  font-family:'Noto Serif Tamil','Noto Serif',serif;font-size:16px;line-height:1.85;white-space:pre-wrap;}
+.print-template.en{font-family:'Noto Serif',serif;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="mark">🐾</div>
+  <div class="brand">PFA திருநெல்வேலி<small>ஆளுநருக்கு புகார் மனு</small></div>
+</div>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="hero-badge"><span class="dot"></span> மேலப்பாளையம் · அவசர புகார்</div>
+    <h1>தெருநாய் கொடுமையை நிறுத்த ஆளுநருக்கு நேரடியாக புகார் அனுப்புங்கள்</h1>
+    <p class="lede">உங்கள் பெயரில் தனிப்பட்ட புகார் மனுவை உருவாக்கி PDF-ஆக பதிவிறக்கம் செய்யவும். பிரிண்ட் செய்து, இந்திய அஞ்சல் Speed Post மூலம் ஆளுநர் மாளிகைக்கு அனுப்பவும்.</p>
+
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btnTa" type="button">தமிழ்</button>
+      <button class="lang-btn" id="btnEn" type="button">English</button>
+    </div>
+
+    <div class="recipient-card">
+      <b>பெறுநர்</b>
+      மாண்புமிகு தமிழ்நாடு ஆளுநர் அவர்கள்<br>ஆளுநர் மாளிகை, கிண்டி, சென்னை – 600022.
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">உங்கள் விவரங்கள்</div>
+    <h2 style="font-size:19px;">புகார் அனுப்புபவர் — நீங்கள்</h2>
+    <p>இங்கு நீங்கள் நிரப்பும் விவரங்களே மனுவில் "அனுப்புநர்" பகுதியில் இடம்பெறும். உங்கள் பெயரில் தனிப்பட்ட முறையில் புகார் அனுப்பப்படும்.</p>
+
+    <div class="form-card">
+      <div class="field">
+        <label for="fname">முழுப்பெயர்</label>
+        <input type="text" id="fname" placeholder="உங்கள் பெயர்">
+      </div>
+      <div class="field">
+        <label for="faddr">முழு முகவரி (அஞ்சல் பதிலுக்கு)</label>
+        <textarea id="faddr" rows="3" placeholder="வீட்டு எண், தெரு, ஊர், மாவட்டம், பின்கோடு"></textarea>
+      </div>
+      <div class="field">
+        <label for="fplace">ஊர் / இடம் (கையொப்பத்திற்கு கீழ்)</label>
+        <input type="text" id="fplace" placeholder="எ.கா. திருநெல்வேலி">
+      </div>
+      <div class="field">
+        <label for="fmobile">மொபைல் எண் (விருப்பத்திற்குரியது)</label>
+        <input type="tel" id="fmobile" placeholder="10 இலக்க மொபைல் எண்" maxlength="10">
+      </div>
+      <div id="formErr" class="err">தயவுசெய்து பெயர், முகவரி, ஊர் ஆகியவற்றை நிரப்பவும்.</div>
+      <div class="privacy-note">உங்கள் பெயர் / ஊர் மட்டும் கீழே உள்ள மொத்த எண்ணிக்கையில் சேர்க்கப்படும் — வேறு யாருக்கும் காட்டப்படாது. முகவரி PDF-ல் மட்டும் உள்ளது, இங்கு சேமிக்கப்படாது.</div>
+
+      <button class="btn btn-primary" id="downloadBtn" type="button">📄 PDF பதிவிறக்கம் செய்ய</button>
+      <div class="success-box" id="successBox">PDF பதிவிறக்கம் ஆகிவிட்டது! கீழே உள்ள படிகளைப் பின்பற்றி அனுப்பவும். உங்கள் ஆதரவுக்கு நன்றி.</div>
+    </div>
+
+    <details class="letter">
+      <summary>மனுவின் முழு உரையைப் படிக்க <span class="chev">▾</span></summary>
+      <div class="letter-preview-body" id="previewBody"></div>
+    </details>
+
+    <div class="counter-row">
+      <div class="counter-num" id="counterNum">0</div>
+      <div class="counter-label">பேர் இதுவரை இந்த புகாரை ஆளுநருக்கு அனுப்பியுள்ளனர்</div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <div class="kicker">அடுத்து என்ன செய்வது</div>
+    <h2 style="font-size:19px;">PDF-ஐ Speed Post மூலம் அனுப்பும் முறை</h2>
+    <ul class="step-list">
+      <li><p>பதிவிறக்கம் செய்த PDF-ஐ திறந்து, A4 தாளில் பிரிண்ட் செய்யவும்.</p></li>
+      <li><p>மனுவின் கீழே உங்கள் கையொப்பம் இடவும்.</p></li>
+      <li><p>அருகிலுள்ள அஞ்சல் நிலையத்திற்குச் சென்று, <b>India Post Speed Post</b> மூலம் அனுப்பவும்.</p></li>
+      <li><p>கீழே உள்ள முகவரியை உறையின் மீது எழுதவும்:</p></li>
+    </ul>
+    <div class="recipient-card" style="margin-top:4px;">
+      <b>மாண்புமிகு தமிழ்நாடு ஆளுநர் அவர்கள்</b>
+      ஆளுநர் மாளிகை, கிண்டி, சென்னை – 600022.
+      <div style="margin-top:10px;"><button class="chip-btn" id="copyAddr">📋 முகவரியை நகலெடுக்க</button></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>People For Animals (PFA) — திருநெல்வேலி</p>
+  <p>இந்த கருவி ஒரு சுயாதீன குடிமக்கள் முயற்சி. உங்கள் பெயரில் அனுப்பப்படும் மனுவிற்கு நீங்களே பொறுப்பு.</p>
+</footer>
+
+<!-- Hidden A4 templates rendered off-screen for PDF capture -->
+<div class="print-template ta" id="tplTa"></div>
+<div class="print-template en" id="tplEn"></div>
+
+<script>
+const LETTER_TA = `மாண்புமிகு தமிழ்நாடு ஆளுநர் அவர்களுக்கு,
+ஆளுநர் மாளிகை,
+கிண்டி, சென்னை – 600022.
+
+அனுப்புநர்:
+{{NAME}}
+{{ADDRESS}}
+
+பொருள்: திருநெல்வேலி மேலப்பாளையம் பகுதியில் தெருநாய்கள் மற்றும் நாய்க்குட்டிகளைப் பல்வேறு வழிகளில் கொல்ல முயற்சிப்பதாக எழுந்துள்ள புகார்கள் – விலங்குகள் மீதான தொடர்ச்சியான கொடுமைகளைத் தடுக்கவும், மனிதர்கள் மற்றும் விலங்குகளின் பாதுகாப்பை உறுதி செய்யவும், உயர்மட்ட விசாரணை நடத்தி உடனடி நடவடிக்கை எடுக்கவும் கோருதல் – தொடர்பாக.
+
+மதிப்பிற்குரிய மாண்புமிகு ஆளுநர் அவர்களுக்கு,
+
+வணக்கம்.
+
+நான், திருநெல்வேலி மாநகராட்சிக்கு உட்பட்ட மேலப்பாளையம் பகுதியில் தெருநாய்கள், நாய்க்குட்டிகள், பூனைகள், மாடுகள் மற்றும் கன்றுக்குட்டிகள் உள்ளிட்ட வாயில்லா ஜீவன்களுக்கு எதிராகத் தொடர்ந்து நடைபெற்று வரும் கொடுமைகள் மற்றும் அவற்றைக் கொல்ல மேற்கொள்ளப்படுவதாகக் கூறப்படும் முயற்சிகள் குறித்து தங்களது கவனத்திற்கு கொண்டு வருகிறேன்.
+
+குறிப்பாக மேலப்பாளையம் பகுதியில் தெருநாய்கள் மற்றும் நாய்க்குட்டிகளுக்கு எதிராக நடைபெறும் வன்முறைகள் குறித்து பலமுறை புகார் அளிக்கப்பட்டுள்ளன.
+
+1. தெருநாய்களைக் கொல்ல முயற்சிப்பதற்கான காரணங்கள் மற்றும் அதன் பின்னணி
+மேலப்பாளையம் பகுதியில் சிலர் தெருநாய்கள் இருப்பதால் திருடர்கள் மற்றும் சமூக விரோத நபர்கள் நடமாடுவதில் சிரமம் ஏற்படுவதாகவும், இரவு நேரங்களில் தெருநாய்கள் குரைப்பதால் தங்களது செயல்பாடுகளுக்கு இடையூறு ஏற்படுவதாகவும் கருதி, அப்பகுதியில் உள்ள தெருநாய்களை முற்றிலும் அகற்ற வேண்டும் அல்லது கொல்ல வேண்டும் என்ற நோக்கத்தில் செயல்படுவதாக தகவல்கள் கிடைத்துள்ளன.
+
+திருட்டு, கொள்ளை மற்றும் சமூக விரோதச் செயல்களைத் தடுப்பது காவல்துறையின் பொறுப்பாகும். அதற்காக தெருநாய்களைக் கொல்வது எந்த வகையிலும் ஏற்றுக்கொள்ள முடியாதது.
+
+ஒருவேளை தெருநாய்களால் பொதுமக்களுக்கு இடையூறு அல்லது பாதுகாப்புப் பிரச்சினைகள் இருந்தால், அதற்குத் தீர்வாக அறிவியல் பூர்வமான கருத்தடை, தடுப்பூசி மற்றும் உரிய விலங்கு நல மேலாண்மை நடவடிக்கைகள் மேற்கொள்ளப்பட வேண்டும். சட்டவிரோதமாக அவற்றைக் கொல்வது தீர்வாகாது.
+
+2. தெருநாய்கள் மற்றும் நாய்க்குட்டிகள் மீதான தொடர்ச்சியான வன்முறை
+மேலப்பாளையம் பகுதியில் தெருநாய்கள் மற்றும் நாய்க்குட்டிகள் அடித்துக் கொல்லப்படுதல், விஷம் வைத்துக் கொல்ல முயற்சித்தல், பல்வேறு வழிகளில் துன்புறுத்துதல் போன்ற சம்பவங்கள் நடைபெறுவதாக தொடர்ந்து புகார்கள் கிடைத்து வருகின்றன.
+
+மேலும், ஆண்டுதோறும் நூற்றுக்கணக்கான நாய்க்குட்டிகள் கொல்லப்படுவதாகவும், குறிப்பாக நாய்க்குட்டிகள் பிறந்தவுடன் அவற்றுக்கு எதிரான கொடுமைகள் நடைபெறுவதாகவும் தகவல்கள் கிடைத்துள்ளன.
+
+சுமார் ஆண்டுக்கு 800 நாய்க்குட்டிகள் வரை பாதிக்கப்படுவதாகக் கூறப்படும் இந்தப் பிரச்சினையின் உண்மைத் தன்மையை அதிகாரிகள் விசாரித்து, உரிய தடுப்பு நடவடிக்கைகளை மேற்கொள்ள வேண்டும்.
+
+3. 21 வயது இளைஞரின் உயிரிழப்பு தொடர்பான தகவல்
+சமீபத்தில் மேலப்பாளையம் பகுதியைச் சேர்ந்த 21 வயது இளைஞர் ஒருவர் உயிரிழந்ததாகத் தகவல் கிடைத்தது. அவர் முன்பு தெருநாய்களை அடித்துத் துன்புறுத்தி வந்ததாகவும், நாய்களுடன் ஏற்பட்ட தொடர்புக்குப் பிறகு உரிய மருத்துவ சிகிச்சை மற்றும் தடுப்பூசி பெறாமல் இருந்ததாகவும் தகவல்கள் தெரிவிக்கின்றன.
+
+இந்த உயிரிழப்பிற்கான உண்மையான மருத்துவக் காரணம் உறுதிப்படுத்தப்படவில்லை. எனவே, சம்பந்தப்பட்ட மருத்துவ மற்றும் சுகாதாரத் துறைகள் மூலம் இதுகுறித்து உரிய விசாரணை நடத்தப்பட வேண்டும்.
+
+இந்தச் சம்பவத்திற்குப் பிறகு மேலப்பாளையத்தில் சில சமூகப் பெரியவர்கள் ஒன்று கூடி அப்பகுதியில் உள்ள அனைத்து தெருநாய்களையும் கொல்ல வேண்டும் என்று பேசியதாக அப்பகுதியைச் சேர்ந்த சிலர் கவலையுடன் தெரிவித்துள்ளனர்.
+
+இது உண்மையாக இருந்தால், உடனடியாகத் தலையிட்டு அத்தகைய முயற்சிகளைத் தடுக்க வேண்டும்.
+
+4. தீபாவளி காலங்களில் விலங்குகள் மீது பட்டாசுகள் வீசி துன்புறுத்துதல்
+ஒவ்வொரு ஆண்டும் தீபாவளி பண்டிகைக் காலங்களில் மேலப்பாளையம் பகுதியில் சில சமூக விரோத நபர்கள் தெருநாய்கள், பூனைகள், மாடுகள் மற்றும் கன்றுக்குட்டிகள் மீது பட்டாசுகள் மற்றும் வெடிகளை வீசி துன்புறுத்துவதாகப் புகார்கள் வருகின்றன.
+
+இந்த ஆண்டும் அதிக அளவில் வெடிகளை விலங்குகள் மீது வீசித் துன்புறுத்த சிலர் திட்டமிட்டு இருப்பதாகத் தகவல் கிடைத்துள்ளது.
+
+இதனைத் தடுக்க காவல்துறை ரோந்துப் பணிகளை அதிகரித்து, விலங்குகள் நல அமைப்புகளுடன் இணைந்து முன்னெச்சரிக்கை நடவடிக்கைகளை மேற்கொள்ள வேண்டும்.
+
+5. சமூக விரோதச் செயல்கள் மற்றும் இளைஞர்களை நல்வழிப்படுத்துதல்
+மேலப்பாளையம் பகுதியில் சுமார் 8 முதல் 10 நபர்கள் கொண்ட பல குழுக்களாக, மொத்தம் எட்டு குழுக்கள் வரை சிலர் இரவு நேரங்களில் சுற்றித் திரிவதாகவும், மது மற்றும் கஞ்சா உள்ளிட்ட போதைப் பொருட்களின் தாக்கத்தில் பொதுமக்களுக்கும் விலங்குகளுக்கும் அச்சுறுத்தல் ஏற்படுத்துவதாகவும் தகவல்கள் கிடைத்துள்ளன.
+
+இந்தத் தகவல்களின் உண்மைத் தன்மையை காவல்துறை விசாரித்து, சட்டவிரோதச் செயல்களில் ஈடுபடுபவர்கள் மீது உரிய நடவடிக்கை எடுக்க வேண்டும்.
+
+அதே நேரத்தில், மேலப்பாளையத்தில் உள்ள பள்ளிவாசல்களின் இமாம்கள், ஜமாத் நிர்வாகிகள் மற்றும் சமுதாயப் பெரியவர்களை மாவட்ட நிர்வாகமும் காவல்துறையும் சந்தித்து, இளைஞர்களுக்கு நல்லொழுக்கம், விலங்குகளிடம் இரக்கம், போதைப் பழக்கத்தைத் தவிர்த்தல் மற்றும் சமூகப் பொறுப்பு குறித்து அறிவுரை வழங்க வேண்டும்.
+
+எனது நோக்கம் யாரையும் குறிப்பாகக் குற்றம் சாட்டுவதோ அல்லது ஒரு சமூகத்தைக் குறை கூறுவதோ அல்ல. விலங்குகள் மீதான வன்முறையையும் சமூக விரோதச் செயல்களையும் தடுத்து, அனைவரும் அமைதியாக வாழ்வதற்கான சூழலை உருவாக்குவதே ஆகும்.
+
+மாண்புமிகு ஆளுநர் அவர்களிடம் எனது முக்கிய கோரிக்கைகள்
+
+தங்களது உயரிய அதிகார வரம்பிற்குட்பட்டு, சம்பந்தப்பட்ட அரசுத் துறைகள் மூலம் கீழ்க்கண்ட நடவடிக்கைகளை மேற்கொள்ள உத்தரவிடுமாறு பணிவுடன் கேட்டுக்கொள்கிறேன்.
+
+1. உயர்மட்ட விசாரணை: மேலப்பாளையம் பகுதியில் தெருநாய்கள் மற்றும் நாய்க்குட்டிகள் கொல்லப்படுவதாகக் கிடைத்துள்ள புகார்கள் குறித்து மாவட்ட ஆட்சியர், மாநகராட்சி மற்றும் காவல்துறை அதிகாரிகள் அடங்கிய குழுவின் மூலம் விசாரணை நடத்த வேண்டும்.
+
+2. உடனடி பாதுகாப்பு நடவடிக்கை: தெருநாய்களுக்கு விஷம் வைத்தல், அடித்துக் கொல்லுதல், பட்டாசுகள் வீசுதல் மற்றும் வேறு வழிகளில் துன்புறுத்துதல் போன்ற செயல்களைத் தடுக்கக் காவல்துறை மூலம் சிறப்புக் கண்காணிப்பு ஏற்படுத்த வேண்டும்.
+
+3. நிரந்தர ABC திட்டம்: மேலப்பாளையம் பகுதியில் Animal Birth Control (ABC) திட்டத்தைத் தொடர்ந்து செயல்படுத்த வேண்டும். தினமும் குறைந்தபட்சம் நான்கு நாய்களுக்காவது கருத்தடை செய்யும் வகையில் இலக்குடன் கூடிய நிரந்தரத் திட்டத்தை உருவாக்க வேண்டும்.
+
+4. தடுப்பூசி நடவடிக்கை: தெருநாய்களுக்கு முறையான Anti-Rabies Vaccination (ARV) வழங்கி, தடுப்பூசி போடப்பட்ட நாய்களின் விவரங்களைப் பதிவு செய்ய வேண்டும்.
+
+5. நாய்க்குட்டிகள் பாதுகாப்பு: நாய்க்குட்டிகள் பிறந்தவுடன் கொல்லப்படுவதைத் தடுக்க, அவற்றைப் பாதுகாக்கவும், தாய் நாய்களுக்கு உரிய கருத்தடை நடவடிக்கைகளை மேற்கொள்ளவும் வேண்டும்.
+
+6. காவல்துறை ரோந்துப் பணி: மேலப்பாளையம் பகுதியில் குறிப்பாக இரவு நேரங்களில் காவல்துறை ரோந்துப் பணிகளை அதிகரித்து, பொதுமக்கள் மற்றும் விலங்குகளின் பாதுகாப்பை உறுதி செய்ய வேண்டும்.
+
+7. சமூகத் தலைவர்களின் ஒத்துழைப்பு: மேலப்பாளையத்தில் உள்ள பள்ளிவாசல் இமாம்கள், ஜமாத் நிர்வாகிகள் மற்றும் சமுதாயப் பெரியவர்களுடன் மாவட்ட நிர்வாகம் கலந்துரையாடி, விலங்குகள் மீதான வன்முறையைத் தவிர்க்கவும் இளைஞர்களை நல்வழிப்படுத்தவும் நடவடிக்கை எடுக்க வேண்டும்.
+
+8. பொதுமக்கள் விழிப்புணர்வு: தெருநாய்கள் தொடர்பான பிரச்சினைகளை சட்டப்படி எவ்வாறு கையாள்வது, நாய்க்கடி ஏற்பட்டால் மேற்கொள்ள வேண்டிய மருத்துவ நடவடிக்கைகள் மற்றும் ரேபிஸ் தடுப்பு குறித்து விழிப்புணர்வு ஏற்படுத்த வேண்டும்.
+
+9. புகார் மற்றும் அவசர உதவி எண்: விலங்குகள் மீதான கொடுமைகள் குறித்து பொதுமக்களும் விலங்கு நல அமைப்புகளும் உடனடியாகப் புகார் அளிக்கக்கூடிய பிரத்யேக உதவி எண் அல்லது ஒருங்கிணைப்பு முறையை ஏற்படுத்த வேண்டும்.
+
+10. கண்காணிப்பு மற்றும் அறிக்கை: மேற்கொள்ளப்பட்ட நடவடிக்கைகள், கருத்தடை செய்யப்பட்ட நாய்களின் எண்ணிக்கை, தடுப்பூசி விவரங்கள் மற்றும் விலங்குகள் மீதான வன்முறை தொடர்பாக எடுக்கப்பட்ட சட்ட நடவடிக்கைகள் குறித்த அறிக்கையைப் பெறுவதற்கான கண்காணிப்பு முறையை உருவாக்க வேண்டும்.
+
+எனது இறுதி வேண்டுகோள்
+
+மனிதர்களின் பாதுகாப்பு எவ்வளவு முக்கியமோ, அதேபோல் வாயில்லா ஜீவன்களின் உயிரும் பாதுகாக்கப்பட வேண்டியது அவசியமாகும்.
+
+திருட்டு மற்றும் சமூக விரோதச் செயல்களைத் தடுப்பதற்காக காவல்துறை நடவடிக்கைகளை வலுப்படுத்த வேண்டும். அதற்குப் பதிலாக தெருநாய்களைக் கொல்வது மனிதாபிமானமற்றதும் சட்டத்திற்குப் புறம்பானதுமான செயலாகும்.
+
+ஒரு நாயால் பொதுமக்களுக்கு ஆபத்து ஏற்பட்டால் அதனை உரிய சட்ட விதிகளின்படி கையாள வேண்டும். ஆனால் ஒரு பகுதியிலுள்ள அனைத்து நாய்களையும் கொல்வது அல்லது அவற்றைத் துன்புறுத்துவது எந்த வகையிலும் நியாயப்படுத்த முடியாது.
+
+தமிழ்நாடு ஒரு நாகரிகமான மற்றும் மனிதாபிமானம் கொண்ட மாநிலமாகத் திகழ வேண்டும். மனிதர்களுக்கும் விலங்குகளுக்கும் பாதுகாப்பான சூழல் உருவாக்கப்பட வேண்டும் என்பதே எனது நோக்கம்.
+
+எனவே, மாண்புமிகு ஆளுநர் அவர்கள் இந்தப் பிரச்சினையின் தீவிரத்தைக் கருத்தில் கொண்டு, உரிய அரசுத் துறைகள், மாவட்ட நிர்வாகம், மாநகராட்சி மற்றும் காவல்துறை மூலம் உடனடி விசாரணை நடத்தி, நிரந்தரத் தீர்வு காணத் தேவையான நடவடிக்கைகளை மேற்கொள்ளுமாறு பணிவுடன் கேட்டுக்கொள்கிறேன்.
+
+நன்றி.
+
+இப்படிக்கு,
+
+{{NAME}}
+{{ADDRESS}}
+தொடர்பு எண்: {{MOBILE}}
+தேதி: {{DATE}}
+இடம்: {{PLACE}}`;
+
+const LETTER_EN = `To,
+The Hon'ble Governor of Tamil Nadu,
+Raj Bhavan,
+Guindy, Chennai – 600022.
+
+From:
+{{NAME}}
+{{ADDRESS}}
+
+Subject: Complaints regarding attempts to kill street dogs and puppies by various means in Melapalayam, Tirunelveli — Request for a high-level inquiry and immediate action to prevent continued cruelty to animals and to ensure the safety of both humans and animals.
+
+Respected Governor,
+
+Greetings.
+
+I wish to bring to your attention the continuing cruelty against stray dogs, puppies, cats, cattle and calves in the Melapalayam area under Tirunelveli Corporation, and reported attempts to kill them.
+
+Repeated complaints have been raised over the violence against street dogs and puppies in Melapalayam.
+
+1. Reasons behind attempts to kill street dogs
+It has come to notice that some persons believe the presence of street dogs makes it difficult for thieves and anti-social elements to move around, and that dogs barking at night disturbs their activities; based on this belief, there appear to be efforts to completely remove or kill the street dogs in the area.
+
+Preventing theft, robbery and anti-social activity is the responsibility of the police. Killing street dogs for this purpose is unacceptable under any circumstance.
+
+If street dogs genuinely cause inconvenience or safety concerns to the public, the solution lies in scientific sterilization (ABC), vaccination and proper animal welfare management — not illegal killing.
+
+2. Continuing violence against street dogs and puppies
+Complaints continue to be received about street dogs and puppies in Melapalayam being beaten to death, poisoned, and tortured in various ways.
+
+It is also reported that hundreds of puppies are killed every year, particularly targeting newborn puppies immediately after birth.
+
+It is claimed that as many as 800 puppies may be affected annually. Authorities must investigate the truth of this claim and take appropriate preventive action.
+
+3. Information regarding the death of a 21-year-old youth
+It has come to attention that a 21-year-old youth from Melapalayam recently died. Reports indicate he had previously been involved in beating and tormenting street dogs, and that he did not receive proper medical treatment or vaccination after contact with dogs.
+
+The actual medical cause of this death has not been confirmed. Therefore, the concerned medical and health departments must conduct a proper inquiry into this matter.
+
+Following this incident, some residents expressed concern that certain senior members of the community in Melapalayam had gathered and discussed killing all street dogs in the area.
+
+If this is true, immediate intervention is required to prevent such attempts.
+
+4. Cruelty to animals using firecrackers during Deepavali
+Every year during Deepavali, complaints are received that certain anti-social elements in Melapalayam throw firecrackers and explosives at street dogs, cats, cattle and calves, causing them harm and distress.
+
+Information suggests that some individuals are planning to subject animals to even greater cruelty with firecrackers this year.
+
+To prevent this, police patrolling should be increased, and precautionary measures should be taken in coordination with animal welfare organisations.
+
+5. Anti-social activity and guiding youth towards better conduct
+Reports indicate that groups of 8 to 10 individuals — up to eight such groups — roam around Melapalayam at night, and under the influence of alcohol and substances including ganja, pose a threat to both the public and animals.
+
+Police should investigate the truth of these reports and take appropriate action against those engaged in unlawful activity.
+
+At the same time, the district administration and police should meet with local religious and community leaders, including mosque imams and jamaat office-bearers, to counsel young people on good conduct, compassion towards animals, avoiding substance abuse, and social responsibility.
+
+My intention is not to accuse any individual or community in particular, but to prevent violence against animals and anti-social activity, and to create a peaceful environment for everyone.
+
+My Key Requests to the Hon'ble Governor
+
+I respectfully request that, within your esteemed authority, the concerned government departments be directed to take the following action:
+
+1. High-level inquiry: A committee comprising the District Collector, Corporation and Police officials should investigate the complaints received regarding the killing of street dogs and puppies in Melapalayam.
+
+2. Immediate protective measures: Special police monitoring should be set up to prevent poisoning, beating to death, firecracker attacks, and other forms of cruelty against street dogs.
+
+3. Permanent ABC programme: The Animal Birth Control (ABC) programme should be continuously implemented in Melapalayam, with a permanent, target-based plan to sterilize at least four dogs per day.
+
+4. Vaccination drive: Street dogs should be given proper Anti-Rabies Vaccination (ARV), and records of vaccinated dogs should be maintained.
+
+5. Protection of puppies: Measures should be taken to prevent puppies from being killed immediately after birth, and sterilization of mother dogs should be carried out.
+
+6. Police patrolling: Police patrolling in Melapalayam, especially at night, should be increased to ensure the safety of both the public and animals.
+
+7. Cooperation of community leaders: The district administration should engage with mosque imams, jamaat office-bearers and community elders in Melapalayam to prevent violence against animals and guide young people positively.
+
+8. Public awareness: Awareness should be created on how to legally handle issues related to street dogs, the medical steps to take after a dog bite, and rabies prevention.
+
+9. Complaint and emergency helpline: A dedicated helpline or coordination system should be established so that the public and animal welfare organisations can immediately report cruelty against animals.
+
+10. Monitoring and reporting: A monitoring system should be created to obtain reports on actions taken, the number of dogs sterilized, vaccination details, and legal action taken regarding violence against animals.
+
+My Final Appeal
+
+Just as human safety is important, the lives of voiceless animals must also be protected.
+
+To prevent theft and anti-social activity, police action should be strengthened. Killing street dogs instead is inhumane and unlawful.
+
+If a particular dog poses a danger to the public, it should be handled according to proper legal procedure. But killing or harming all dogs in an area can never be justified.
+
+Tamil Nadu must stand as a civilised and humane state. My objective is to create a safe environment for both humans and animals.
+
+I therefore respectfully request the Hon'ble Governor to consider the seriousness of this matter and direct the concerned government departments, district administration, Corporation and police to conduct an immediate inquiry and take the necessary steps towards a permanent solution.
+
+Thank you.
+
+Yours sincerely,
+
+{{NAME}}
+{{ADDRESS}}
+Contact number: {{MOBILE}}
+Date: {{DATE}}
+Place: {{PLACE}}`;
+
+let currentLang = 'ta';
+function $(id){ return document.getElementById(id); }
+
+function todayStr(){
+  const d = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  return `${pad(d.getDate())}.${pad(d.getMonth()+1)}.${d.getFullYear()}`;
+}
+
+function fillTemplate(tpl, data){
+  return tpl
+    .replaceAll('{{NAME}}', data.name)
+    .replaceAll('{{ADDRESS}}', data.address)
+    .replaceAll('{{MOBILE}}', data.mobile || '—')
+    .replaceAll('{{DATE}}', data.date)
+    .replaceAll('{{PLACE}}', data.place);
+}
+
+function updatePreview(){
+  const data = {name:'[உங்கள் பெயர்]', address:'[உங்கள் முகவரி]', mobile:'[மொபைல்]', date: todayStr(), place:'[ஊர்]'};
+  const tpl = currentLang === 'ta' ? LETTER_TA : LETTER_EN;
+  $('previewBody').textContent = fillTemplate(tpl, data);
+}
+
+$('btnTa').addEventListener('click', ()=>{
+  currentLang = 'ta';
+  $('btnTa').classList.add('active'); $('btnEn').classList.remove('active');
+  updatePreview();
+});
+$('btnEn').addEventListener('click', ()=>{
+  currentLang = 'en';
+  $('btnEn').classList.add('active'); $('btnTa').classList.remove('active');
+  updatePreview();
+});
+updatePreview();
+
+async function loadCounter(){
+  try{
+    const res = await window.storage.get('governor_complaint_count', true);
+    $('counterNum').textContent = res ? res.value : '0';
+  }catch(e){ $('counterNum').textContent = '0'; }
+}
+async function incrementCounter(){
+  try{
+    let count = 0;
+    try{
+      const res = await window.storage.get('governor_complaint_count', true);
+      count = res ? parseInt(res.value,10) || 0 : 0;
+    }catch(e){ count = 0; }
+    count += 1;
+    await window.storage.set('governor_complaint_count', String(count), true);
+    $('counterNum').textContent = String(count);
+  }catch(e){ console.error(e); }
+}
+loadCounter();
+
+$('downloadBtn').addEventListener('click', async ()=>{
+  const name = $('fname').value.trim();
+  const address = $('faddr').value.trim();
+  const place = $('fplace').value.trim();
+  const mobile = $('fmobile').value.trim();
+
+  if(!name || !address || !place){
+    $('formErr').style.display = 'block';
+    return;
+  }
+  $('formErr').style.display = 'none';
+
+  const btn = $('downloadBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ PDF தயாராகிறது...';
+
+  try{
+    const data = {name, address, mobile, date: todayStr(), place};
+    const tpl = currentLang === 'ta' ? LETTER_TA : LETTER_EN;
+    const filled = fillTemplate(tpl, data);
+    const container = currentLang === 'ta' ? $('tplTa') : $('tplEn');
+    container.textContent = filled;
+
+    await document.fonts.ready;
+    // small delay to ensure layout settles
+    await new Promise(r => setTimeout(r, 150));
+
+    const canvas = await html2canvas(container, {scale:2, backgroundColor:'#ffffff', useCORS:true});
+    const imgData = canvas.toDataURL('image/jpeg', 0.95);
+
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF('p','mm','a4');
+    const pageWidth = 210, pageHeight = 297;
+    const imgWidth = pageWidth;
+    const imgHeight = canvas.height * imgWidth / canvas.width;
+    let heightLeft = imgHeight;
+    let position = 0;
+
+    pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+    while(heightLeft > 0){
+      position = heightLeft - imgHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
+
+    const safeName = name.replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-+|-+$/g,'') || 'complaint';
+    pdf.save(`Governor-Complaint-Melapalayam-${safeName}.pdf`);
+
+    await incrementCounter();
+    $('successBox').style.display = 'block';
+  }catch(e){
+    console.error(e);
+    alert('PDF உருவாக்கத்தில் சிக்கல் ஏற்பட்டது. மீண்டும் முயற்சிக்கவும்.');
+  }finally{
+    btn.disabled = false;
+    btn.textContent = '📄 PDF பதிவிறக்கம் செய்ய';
+  }
+});
+
+$('copyAddr').addEventListener('click', async ()=>{
+  try{
+    await navigator.clipboard.writeText('மாண்புமிகு தமிழ்நாடு ஆளுநர் அவர்கள்\nஆளுநர் மாளிகை, கிண்டி, சென்னை – 600022.');
+    $('copyAddr').textContent = '✓ நகலெடுக்கப்பட்டது';
+    setTimeout(()=>{ $('copyAddr').textContent = '📋 முகவரியை நகலெடுக்க'; }, 1800);
+  }catch(e){}
+});
+</script>
+
+</body>
+</html>
