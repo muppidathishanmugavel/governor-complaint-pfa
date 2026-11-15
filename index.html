@@ -13,7 +13,7 @@
 :root{
   --ink:#1E2A24; --paper:#F5F1E6; --paper-2:#EFE9D8; --card:#FFFDF8;
   --amber:#C97A2B; --amber-dark:#A65E1C; --moss:#5C7A5E; --brick:#9C3B2E;
-  --line:rgba(30,42,36,0.14); --max:580px;
+  --line:rgba(30,42,36,0.14); --max:1160px;
 }
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -23,76 +23,78 @@ h1,h2,h3{font-family:'Noto Serif Tamil',serif;font-weight:700;margin:0 0 .5em;li
 .wrap{max-width:var(--max);margin:0 auto;padding:0 20px;}
 a{color:var(--amber-dark);}
 
-.topbar{display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--line);
-  position:sticky;top:0;background:rgba(245,241,230,.92);backdrop-filter:blur(4px);z-index:20;
-  padding-top:calc(16px + env(safe-area-inset-top,0px));}
-.mark{width:48px;height:48px;flex:none;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid var(--line);}
-.mark img{width:44px;height:44px;object-fit:contain;}
-.brand{font-family:'Noto Serif Tamil',serif;font-weight:700;font-size:14.5px;}
-.brand small{display:block;font-family:'Noto Sans Tamil',sans-serif;font-weight:400;font-size:11px;color:var(--moss);}
+.topbar{display:flex;align-items:center;gap:12px;padding:14px 24px;border-bottom:1px solid var(--line);
+  position:sticky;top:0;background:rgba(245,241,230,.94);backdrop-filter:blur(6px);z-index:20;
+  padding-top:calc(14px + env(safe-area-inset-top,0px));}
+.mark{height:46px;padding:4px 8px;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);box-shadow:0 1px 3px rgba(0,0,0,0.05);}
+.mark img{height:36px;width:auto;object-fit:contain;display:block;}
+.brand{font-family:'Noto Serif Tamil',serif;font-weight:700;font-size:15px;line-height:1.25;}
+.brand small{display:block;font-family:'Noto Sans Tamil',sans-serif;font-weight:400;font-size:11.5px;color:var(--moss);margin-top:2px;}
 
-.hero{padding:36px 20px 26px;}
+.hero{padding:36px 20px 24px;}
 .hero-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--brick);background:rgba(156,59,46,.09);
-  border:1px solid rgba(156,59,46,.25);padding:5px 11px;border-radius:100px;margin-bottom:16px;}
+  border:1px solid rgba(156,59,46,.25);padding:5px 12px;border-radius:100px;margin-bottom:14px;font-weight:600;}
 .hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--brick);}
-.hero h1{font-size:24px;}
-.hero p.lede{font-size:15px;color:#3a463f;margin:0 0 20px;}
+.hero h1{font-size:26px;max-width:850px;}
+.hero p.lede{font-size:15.5px;color:#3a463f;margin:0 0 18px;max-width:850px;}
 
-.lang-toggle{display:flex;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:4px;gap:4px;margin-bottom:18px;}
-.lang-btn{flex:1;text-align:center;padding:9px 0;border-radius:9px;font-size:13.5px;font-weight:700;cursor:pointer;border:none;background:transparent;color:#5a655e;}
+.lang-toggle{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:4px;gap:4px;margin-bottom:16px;width:100%;max-width:280px;}
+.lang-btn{flex:1;text-align:center;padding:8px 0;border-radius:9px;font-size:13.5px;font-weight:700;cursor:pointer;border:none;background:transparent;color:#5a655e;}
 .lang-btn.active{background:var(--amber);color:#fff;}
 
-section{padding:30px 20px;}
+.recipient-banner{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 18px;font-size:13.5px;color:#3a453d;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;}
+.recipient-banner b{font-family:'Noto Serif Tamil',serif;font-size:15px;color:var(--ink);display:block;margin-bottom:2px;}
+
+section{padding:32px 20px;}
 section.alt{background:var(--paper-2);}
 .kicker{font-size:11.5px;color:var(--moss);font-weight:700;letter-spacing:.02em;margin-bottom:6px;}
-section h2{font-size:19px;}
+section h2{font-size:20px;}
 section p{font-size:14.5px;color:#2c352f;}
 
-.recipient-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:13.5px;color:#3a453d;}
-.recipient-card b{display:block;font-family:'Noto Serif Tamil',serif;font-size:14.5px;color:var(--ink);margin-bottom:3px;}
+/* Desktop 2-column layout */
+.main-grid{display:grid;grid-template-columns:1fr;gap:24px;align-items:start;}
+@media (min-width: 820px){
+  .main-grid{grid-template-columns: 460px 1fr; gap:32px;}
+  .hero{padding:44px 20px 28px;}
+  .hero h1{font-size:30px;}
+}
 
-.form-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:4px;}
+.form-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 2px 8px rgba(0,0,0,0.03);}
 .field{margin-bottom:14px;}
 .field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:#2b332d;}
-.field input, .field textarea{width:100%;padding:12px 13px;border-radius:9px;border:1.5px solid var(--line);
-  font-size:15px;font-family:'Noto Sans Tamil',sans-serif;background:#fff;color:var(--ink);resize:vertical;}
+.field input, .field textarea{width:100%;padding:11px 13px;border-radius:9px;border:1.5px solid var(--line);
+  font-size:14.5px;font-family:'Noto Sans Tamil',sans-serif;background:#fff;color:var(--ink);resize:vertical;}
 .field input:focus, .field textarea:focus{outline:2px solid var(--amber);outline-offset:1px;border-color:var(--amber);}
-.err{color:var(--brick);font-size:12.5px;margin-top:6px;display:none;}
-.privacy-note{font-size:11.8px;color:#5a655e;margin:2px 0 16px;line-height:1.5;}
+.err{color:var(--brick);font-size:12.5px;margin-top:6px;display:none;font-weight:600;}
+.privacy-note{font-size:11.8px;color:#5a655e;margin:4px 0 16px;line-height:1.5;}
 
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 18px;border-radius:10px;
-  font-family:'Noto Sans Tamil',sans-serif;font-size:15px;font-weight:700;text-decoration:none;cursor:pointer;border:none;
-  transition:transform .15s ease;width:100%;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 18px;border-radius:10px;
+  font-family:'Noto Sans Tamil',sans-serif;font-size:14.5px;font-weight:700;text-decoration:none;cursor:pointer;border:none;
+  transition:all .15s ease;width:100%;}
 .btn:active{transform:scale(.98);}
 .btn-primary{background:var(--amber);color:#fff;box-shadow:0 3px 0 var(--amber-dark);}
 .btn-primary:active{box-shadow:0 1px 0 var(--amber-dark);}
 .btn-primary:disabled{opacity:.6;}
-.btn-outline{background:transparent;color:var(--ink);border:1.5px solid var(--line);}
 .btn-email{background:#1a73e8;color:#fff;box-shadow:0 3px 0 #0d5bca;margin-top:10px;}
 .btn-email:active{box-shadow:0 1px 0 #0d5bca;}
-.btn-email:disabled{opacity:.6;}
 
-/* Divider between buttons */
 .action-divider{display:flex;align-items:center;gap:10px;margin:12px 0;font-size:12px;color:#8a9a8d;}
 .action-divider::before,.action-divider::after{content:'';flex:1;height:1px;background:var(--line);}
 
-.success-box{display:none;background:rgba(92,122,94,.1);border:1px solid rgba(92,122,94,.35);color:#33452f;
-  border-radius:10px;padding:13px 14px;font-size:13.5px;margin-top:14px;line-height:1.6;}
-.email-success-box{display:none;background:rgba(26,115,232,.08);border:1px solid rgba(26,115,232,.3);color:#0d47a1;
-  border-radius:10px;padding:13px 14px;font-size:13.5px;margin-top:14px;line-height:1.6;}
+.success-box{display:none;background:rgba(92,122,94,.12);border:1px solid rgba(92,122,94,.4);color:#243d22;
+  border-radius:10px;padding:12px 14px;font-size:13.5px;margin-top:12px;line-height:1.55;}
+.email-success-box{display:none;background:rgba(26,115,232,.09);border:1px solid rgba(26,115,232,.35);color:#0d47a1;
+  border-radius:10px;padding:12px 14px;font-size:13.5px;margin-top:12px;line-height:1.55;}
 
-details.letter{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:16px;}
-details.letter summary{cursor:pointer;font-weight:700;font-family:'Noto Serif Tamil',serif;font-size:14.5px;
-  list-style:none;display:flex;justify-content:space-between;align-items:center;}
-details.letter summary::-webkit-details-marker{display:none;}
-details.letter summary .chev{color:var(--amber-dark);transition:transform .2s ease;}
-details.letter[open] summary .chev{transform:rotate(180deg);}
-.letter-preview-body{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line);font-size:13px;white-space:pre-wrap;color:#293029;max-height:400px;overflow-y:auto;}
+.preview-col{display:flex;flex-direction:column;gap:18px;}
+.letter-box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.03);}
+.letter-box h3{font-size:16px;margin:0 0 12px;display:flex;align-items:center;justify-content:space-between;}
+.letter-preview-body{font-size:13.2px;white-space:pre-wrap;color:#293029;max-height:460px;overflow-y:auto;padding-right:8px;line-height:1.75;background:#faf8f2;padding:14px;border-radius:10px;border:1px solid var(--line);}
 
-.counter-row{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);
-  border-radius:14px;padding:16px;margin-top:18px;}
-.counter-num{font-family:'Noto Serif Tamil',serif;font-size:28px;color:var(--amber-dark);font-weight:700;}
-.counter-label{font-size:12.5px;color:#5a655e;}
+.counter-row{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);
+  border-radius:14px;padding:16px 20px;}
+.counter-num{font-family:'Noto Serif Tamil',serif;font-size:32px;color:var(--amber-dark);font-weight:700;line-height:1;}
+.counter-label{font-size:13px;color:#5a655e;line-height:1.4;}
 
 .step-list{counter-reset:step;list-style:none;margin:16px 0 0;padding:0;}
 .step-list li{display:flex;gap:12px;margin-bottom:12px;}
@@ -100,68 +102,58 @@ details.letter[open] summary .chev{transform:rotate(180deg);}
   background:var(--moss);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;}
 .step-list p{margin:0;font-size:13.8px;color:#3a453d;}
 
-.chip-btn{font-size:12px;padding:7px 11px;border-radius:100px;border:1px solid var(--line);background:#fff;cursor:pointer;color:#3a453d;}
+.chip-btn{font-size:12px;padding:7px 12px;border-radius:100px;border:1px solid var(--line);background:#fff;cursor:pointer;color:#3a453d;font-weight:600;}
 
-/* Governor email info box */
-.email-info-card{background:rgba(26,115,232,.06);border:1px solid rgba(26,115,232,.22);border-radius:12px;
-  padding:13px 16px;margin-top:16px;font-size:13px;color:#1a3a6e;}
-.email-info-card b{display:block;margin-bottom:4px;font-size:13.5px;}
-.email-info-card a{color:#1a73e8;font-weight:600;}
-
-footer{padding:26px 20px 40px;text-align:center;}
-footer p{font-size:11.5px;color:#647065;margin:4px 0;}
-
-/* ── Email modal ── */
-.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;align-items:center;justify-content:center;padding:16px;}
+/* Modal for Desktop Email Compose */
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;align-items:center;justify-content:center;padding:16px;}
 .modal-backdrop.open{display:flex;}
-.modal-box{background:#fff;border-radius:16px;width:100%;max-width:560px;max-height:92vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3);}
-.modal-head{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;}
+.modal-box{background:#fff;border-radius:16px;width:100%;max-width:620px;max-height:92vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.35);}
+.modal-head{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;background:var(--paper);}
 .modal-head h3{margin:0;font-size:16px;font-family:'Noto Serif Tamil',serif;}
-.modal-close{background:none;border:none;font-size:20px;cursor:pointer;color:#666;padding:4px 8px;border-radius:6px;}
-.modal-close:hover{background:#f0f0f0;}
-.modal-body{padding:14px 18px;flex:1;overflow-y:auto;}
+.modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:#666;padding:4px 8px;border-radius:6px;line-height:1;}
+.modal-close:hover{background:#e0ded6;}
+.modal-body{padding:16px 18px;flex:1;overflow-y:auto;}
 .modal-letter{width:100%;min-height:260px;border:1.5px solid var(--line);border-radius:8px;padding:12px;font-size:13px;
   font-family:'Noto Sans Tamil',sans-serif;line-height:1.7;resize:vertical;color:var(--ink);background:#fafafa;}
-.modal-steps{margin:14px 0 0;padding:0;list-style:none;}
-.modal-steps li{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;font-size:13.5px;color:#2c352f;}
-.modal-steps li .num{flex:none;width:22px;height:22px;border-radius:50%;background:var(--moss);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px;}
-.modal-foot{padding:14px 18px;border-top:1px solid var(--line);display:flex;gap:10px;flex-wrap:wrap;}
-.modal-foot .btn{flex:1;min-width:140px;padding:12px 14px;font-size:14px;}
+.modal-foot{padding:12px 18px;border-top:1px solid var(--line);display:flex;gap:10px;flex-wrap:wrap;background:var(--paper);}
+.modal-foot .btn{flex:1;min-width:160px;padding:12px 14px;font-size:13.5px;}
 .btn-copy{background:var(--moss);color:#fff;box-shadow:0 3px 0 #3d5c3f;}
 .btn-copy:active{box-shadow:0 1px 0 #3d5c3f;}
 .btn-copy.copied{background:#2e7d32;}
 
-/* hidden print templates, rendered off-screen for html2canvas capture */
+footer{padding:30px 20px 48px;text-align:center;}
+footer p{font-size:12px;color:#647065;margin:4px 0;}
+
 .print-template{position:fixed;top:0;left:-9999px;width:794px;background:#fff;padding:60px 56px;color:#111;
   font-family:'Noto Serif Tamil','Noto Serif',serif;font-size:16px;line-height:1.85;white-space:pre-wrap;}
 .print-template.en{font-family:'Noto Serif',serif;}
 </style>
 </head>
-<body>
-
-<div class="topbar">
+<body><div class="topbar">
   <div class="mark">
     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAL8AAABFCAYAAAAb4zd5AAAQAElEQVR4AeydCbxP1RbHf/t/R8MdzDKrlDkNMqTcSIYUIbxKIYkGSdFcNCINxnoiU4beQ1RmT0RCyFSGCCFJuLhcd/y/8906+rvvXu6f23uvnPu567/P2XvtffZZe+2111p7OD6/9+dR4AKlgE/en0eBC5QCHvNfoA3vvbbkMb/HBRcsBTzmv2Cb3ntxj/lP4wHv5kKigMf859HaKSkp2rt3rxxniS0lMTFR6enp9vpsP+DFH0/S1l+P6audhzVtw88at3KvRq74ScOX7dG4VXs1Z+N+7dq9WzfeGKf9+/efrUgvPUgKeMwfJMFA//HHH7Vo0SLt27dPzZo107Zt25ScnKyXXnpJy5cvByVLSExK1uLNe/X43F1q++kBNZmdpJsW+tVqeW7dtylaXTfH6JEfYtVx3Be6/b5n9EDP57R61Wq98847pzpZloV7CUFRwGP+IMiFhAd+/vln3XLLLerWrZuKFSumq666yjI/jE9cUlLSaaX6nbvUdL9Wbf1J14/apLi5uTQwoZQWhBTTztBY+UPzKjwqr0KOHVNo0gn5wlPkXzhapX/4SGuXLNAXS5Zo9erVOnr0qFOS959TFPCYPwhKvvbaa1qzZo2ioqLUqlUrxcTEqFGjRho7dqx69uyp6OhoG/bu3VuoQG7Ry7ft111Tdqr6/FCtiamq0BKxCk/zy6Sky/j9UqhPJkJKea66Sr1+tcLal1L6+nlatPZ7NW3SWGXLlFFkZKQ2b97sFumFOUABXw6UccEUMWXKFPXv319du3bV999/r7fffltLHKnMSPDQQw9pt6Of16tXT3FxcapTp44ST5zQO/M3qdm8dH2cWlKhMYUVkpYsc/igTB6HbIUdX3MRIxWT0heMVHriMfXo+aTmzJmp/v36KsJheJ5BZ6tUqdJ/n/mdKv6V/z3mD6J127Vrp+uuu050AnT9O++8U08++aSWLl2qWbNmqV+/furVq5cqVKig4e+9p7hb2qjXt0d0sERhR8KHyGFzmdAEpfdtKl+3q1TmxTtU4Pk7lfZmT6V8+JryRUpDhr2r8Mhcevzxx+3Ikjt3bltDmB87w954PzlCAY/5gyAjzP7Pf/5Tixcvtkz+4IMP6j2HyTt27KjSpUtb/f+BBx7Qm2++qQOHDml436dUbXxP+Zd/IkU5D0qX/Ekh8j0zRvlKltPQJ9poWr8HNLhBGbVuUENt27SxHevSSy+VMcbJIB0/flwjR45U0aJFtXHjRhvn/eQMBXw5U8yFUUqRIkU0f/58jRgxQp999plQcZD048ePtypP/vz5dc011+i5557TkCFDtGXHbn25YJrqz3hB/q+mScX9Mgs/UHKnqvp523rddmd7zViwWG3uvkfjJ07U4MGDBePnzZvXjiYnHLUpNTVVO3bsUPHixa0bFYP7wqD2H/+WHvMHSeOwsDB9+OGHliFdA3jgwIGqWbOm6ATDhw+3Lslp06apcuXKCskdowkzZqrT9olKGTtY/lbtFdFpgMJCQnTvnW0V4oS4TGHqAwcO2Nr4fD5t2bJFQ4cOtYZuy5YtFRoaKrxIdAaL5P2cNwU85j8HEsbGxgqV59FHH9Wvv/6q5s2bW52/ZfPG2rBquRo3bqxdu3ZZ3R9GLnBRcb3pjBaPH5+rtFnTZW57UHp5kiYuWavY0HSVK1fOqjmoN3QEY4xQsVBz8BpVq1bNdigmxugk51BlL0smFPBlEnemKC/tNwrA1IUKFRL6/scff6yatWqpUc/3NGFjvNZs2WF9//jmmfwiS648Uerz/gTd9KPTARIOyURXUeKrn+qJwVPV47HumjFjBmi66667rE+fEeaiiy7SunXrrIfp4MGD1sVKvEX0fs6bAh7znycJjTHKkyePYirV0a/NeutYj1EKe2GijkQWVYsWLTR69Gj98MMP1kjO5ejyjRvUVvr3B5QedkTpn32oihUudiT/ZcJeaNiwoe677z698MIL+vbbb1WyZEmr6sydO9eGERERdoQ4zyp72X+jgO+30AvOkwJTNhxWvC+vdCKf/BVvVtiwtfoxPknJKSk65szcoh6lpqapSKGCClszU7lf66jno7bq69kT9eBDD6l27dqWwe+44w69/PLL+uijj3T11Vfrl19+Uapj9B53ytj700/yn2c9vey/U8Bj/t9pcc5XB48e16gfHT9+SJgjmZ1i4qW0mBCF1uukMaNGqUyZMnY5xGOPPSaM2mo7xml8jzv0zIAh8oWEOxlkRwfmD1BzcuXKJQzhAgUKiMVzeJCOHDms73cf0a8JyRbf+zl/CnjMf540RBJ/8PVuJYQVdSayfivM55f/FyNdVkUb1n4rXJavv/66leasAp05Z74aNm8ln+PBYb3O2rVr7Yzwrbfeaie2KGXPnj0qUaKEZf7u3btr43ffKrVyU635cR/JFjB+AXvj/QRNAY/5gyZZYAYpMSlFQzc5ZIxy4FSSXybdgYuKKT1XHqvSpKWlCcZ/6qmn7JKIB7p0Ede4S9HxMaDnzJmj+++/X7fddpsuueQSJSQkaOfOncoXG6NxEyfLf31LzV+7w+kI3wkjm1Wkzz//vO0g8v6CpkBgiwWd2csgbT9wTIdMETnC/jdy+J3QAccQ9iclKdVhepYjw6ROggYNGqSvvvpKTzzxhJ5++mlr3I4ePVpTp05V/fr1BR4S/95777W6/3fffaeO99ytrQfT5P9ugSYPeV2znU5C56hYsaKdYcamoGwPgqOAx/zB0es/sL856FdidK6Tun6IkxziML4T2P8jR1W1QIRY+ckk1datWzVt2jQxK3zZZZcJaY9KFB0drWuvvdaqPixkYyaZDoObtGrVqmp6+x2aPXqAZrQqpZEvPqxKlStr0qRJdu9AkyZNbIdiAsw+0/vJNgU85s82qU4iomOjwsTHx2vZl0s0e/Eqx22ZJCX8orQ93ytt326lhztkTUuXIiOU5vcr4ehR6+pkCXT58uWtMWuM0QcffGBHgNGO5Kd0JrTeeustPfLII6pevbqqVKmiqKgoHTx4QDt271FCZD4lK1SONSHcqCyuo/OQj/weBEcBp5WCy3AhY8P4K1asUFxcnNq3b6/cMbGqnrhWYQ+U1iVv1dM/L92kJw6MU9Ts95VWVPLnL6yE1BD169/fLlNgzQ4zuDArZeHN+clxX37yySeWrDNnztT777+vzz//3N4z4dW9e3e7aaZ16zbOjHFFHTp0SLNnz7YrSCdMmCDmAJhHYA7AZvJ+sk0Bj/mzTSoJJoV5Wdtz5ZVXKjw0VI881kPNG96kahXKKfXoId1/VyvNbFNCl094S/58hbUnvJD2bN2oyy+/3E6G4cevWbOmFi5cqBtuuEHPPvuslf5Ug0VtpUqVtKtD0eMZEbARWC/EatKVK1faZQ7uZFjZsmXFMgtwyP8/hz9ZBTzmD6LBUEMwVrdt2yY2r7CcOdkxat/9+99V4KISKl2uvMZ8OF4VqtfSnMdvVKmV8+Tv9netWL1Gk8aN0ddff627775b6PM9evQQy5/Hvf+uJrw3UD26PaQls6Ypvy9JRcPTdFmBPKp7RTnVv76WYHJcouscl+j0uQs1b9GX2vfzPrubDI9P4cKFbacI4lU8VIcCHvM7RMju/8UXX6xXXnnFLlpjAwvemRUrllvfPEzNJFXp0qWdGd1EFS9/lYbeUFB5Tai2tXhJD/YeoP59Xxeb35m5nfDhhzIpiRqxdIeGJ9fRwIQ66rmmoNpNO6ymwzfqur6f64pHxurGZh1ER5nkGLhfLl2qdV8tUrg/VXWur6NSpUrZqm/fvt3OIdgb7yfbFPCYP9ukOonIzCuMznLlhKMJmjvjE6UkJ9l1/Kg2MGlsbKxFbtCwvl4KW+H4+osotP90fZpQTE2a3GJPfGjV7n4tq9lF4Y/9QxF171D4VdcrrH5rRdzSUaGtustX4jLdfWU+TR7/nmbNmq1//etfFmbOnKE6dWpbF+eLL74odpdhfDOa2Id6P9mmgC/bmB7iKQrQARgFmjRvqdm/FtKij8dL/nR16NDBbnAZOHCgMGhDInLr/s73qc3uT+RfvFIhh47rp5/2aMOGDdq2eZMSdhxSUppP6b5Ipacky5+YoKT0MBWYPkAT6/k0auQgxdW9QSVLlhDGMlCqTFk1djoQe4lZOj1v3jzrPWJJxKkKehfZooDH/Nki0+lIMDYxIWGhim7WWU1nJ2vYkGE6ceyotQVYroBxvGzZMj3S7VFtX/elXrl0ryb1bKCpU6ZYFWXcB8PUt2q82m8fphtWDdKlW+er5M5larJ6oCY/1UitOnW1Lk33WQr4c+M4MgWPET5+OmQAineZDQr80cyfjSr8eVBwUeJaZDYWiXv0wH5F+JOV3rWzeh2orBHvDbfHl/zdMYBZpjBx4kQ92aunOnR+UGG5o9SszV1q1LixWL5wR5u2evzJp/Xeq09ryts9tOiV1lrap7EmDXtetW9qLJkQZfwzxsgYcyoaaY/eHx8fLybRTiV4F9migMf82SLTSST0aiaVOMEhJiZGc2fNVOlvxqn8B4MUUrSQHt1XXu+MmarwiAi7Rgem/PTTT+1KTvz3uCtRefaeOuLQKCwyl/JGRatgvlgVcuYFcueNsirTySdKhw8ftis+N23aJNyjGNWs+XHTsTPY5G7M753CTfPCM1PAY/4z08emomYwGYWPf9y4cWITO8sR7nV0/EG9umh6j4YaW2SLGmqbnpv5syaO/8j672+55Ra9++671p8P88v5Y+M7NsEbb7xhy6HsQHBQLLN/7kx0/eMf/9CoUaPsiQ5r1qyxXiXmFyIjI0GzgPRnRGLps43wfrJNAY/5s0kq9uv26dNHo0ePFiPA4sWLbc6wXHlVplwFtWjVSjP7d9bIeml6+ZXe1h3aunVr3XTTTXYFZo0aNcQEFys5Wd5M58EuYOcWpz307dvXHoJFZ6FzxcfHq1q1anapQ69evfS3v/1NMD6GNlsZjTFKTk4WIwI7yVhyIe8vKAp4zJ8NchljLMOztZB9uZ06dRI6P0sNjDGOHq7fVJVIte78sKZ+/LG6d++uVatWWYbeuXOnPYrElfA8sm7dunZB2tNPP20XtdWsWVONGjWyTN65c2fdfvvtYvGbq8uT13mKEvfv1qoVy4TLc7wzV8ApD+z1RQ2jXA+yTwGP+bNJq+LFi6tWrVoW7rnnHrVt29ZK9BEjRiox8cRppVzpSGx0c9beMDPbw5nNxScvnYZmbzi5oXnz5na9UIUKFZQvXz6nMxmbxg8nNhzatl5TJ4zRgy+8oat6jVbcq7NVpWo1tWnbRtdff73z/ESrEoHvQfYp4DF/9mllmRJJzBGCFStWtH79+vXr6YFXh+mNgSO0btXXSj58wI4CqCL44TnLBxUHJuUIQrYprl+/XujwLjCacP2d4/9fuXSxFsydJY4x6fX8a2r0SF9d3GeOWs9N0/CEq7Slyr06XqOZomPzaf36DVa9Ymk0Xp8gXsVDdSjg2qKJZQAAEABJREFUMb9DhHP9N8aobNmyuv+etno+tYFu/WiH/tZnmOZPmSR/epIjlevYCa1vvvnGnr2JT54ly6wJGu3YDpMmTbLq0wqH4SePGKwuHe9VsxYd1PKF8er6RZIGJl2jL6Kv1fHS1yqs/JUKLVJU4f5EsUnmeFKy8uTO7ahVb9mN7pwSfa7vcaHm85g/B1r+unIXqWjeFO27vpWmX/m4Gi/0qe59fTRz2lQ98ejDGjLwbYWFhuqZZ56x3huOMnyj3+vq8dhjatyspdJzF9ZXeWtobc0eOvjQeCXf2l0hxcvJF25kwnwyPp98fPHF+CTH/298oTp05Lij+lRVxYqVhMeHDTHy/oKigEPNoPA95Ewo4DNGHS+NUPrBJGfSK0ShtW7VV5W7qN3X+fXwB4s1b8V6DRzQV7u3fKvN677RZ7Pn6cWh43T7MyNU581F6rYyVEtCLlNybAnpxBGlH94no3TB5FKIjDOT7A8Jk3HAH5lb/rBcSkpNyaQmXlQwFPCYPxhqnQG3dqlcypXqGL7+VJmEY/KFpCg9toA+z1dD+9sM03OLT6hMxwGq3GOsmr+7Tv0OVNXqy25VSqESCstfUCEhfhlHVbKPCAmVwsIcvg+XP1e00vIU0glfHp3Y96uS169UyJalyhMZYVH/1D//48r7/sfP/8s8/upieVQxaY9SQx2mTEmW7/gR+R0pHnr4Z+c6XuG1m8rEdVBI3daKvLqmIkKOy3d0n/P+Rg7ny+8wfFpIpNJPpCjV8R6lHjms/Id2qeaJrWqpjep50Q5NbBKhDb2u1IEhd+rSEkWdvBfOP65eF7J6a9KzSsss3mP+zKhyDnH58uRS0+LHlLZ3v5SaLKWdcCR5mmP4pkhJTkc4vFfhKccUcvywlJIq+SKUrDDHO5SglO1blLrlGxXat15ti8Zr8A0xmt2uohY8UU+TH2ukUQ/erL5311fbuKtUsWwJRefNI585h0r+ibMw79H4pht0e/Pb7KkW77zzjgKNfI5y6d27d1Bv6AsK20POkgLGGHWpW155di1Tut8vpadJTuBPSnQu0+X3hzk8nyp/wlHl++V7ld2zUjUTN+jh8sma3KGytvZrpR8GddaYnneqS4s41b+6vC4vWUQFY6MUGRHuMPsFxu0ZKD1t2jRnhrylBg0caI93YcKRT0Ox7ASJz3IQ9jJnyHbGW4/5z0ie4BILxMbo+RsKKG33dqXs3aOUHd9K+35Qef2iu4on6vVrc2nsHeU0vUd9zXv1bs17rbPefqi1msXVVJmSxRXhMHlwT7xwsVncx3KRL7/8UnwTjQWHzMEEQxGP+YOh1llwHeGv+26+Wvfm36E+NcK16KmG2jP8Ea0e/KhG9rpLT7RtoNaO6nJNhUtUvEhB5XKMVmOMnP+zlOwlB1KARXxI+7p164pDvZg3iYuLsyfcBeKd7fr/jfnPVt//+/T80Xk18tn79GyH23VdtUoqmC9GIT6fw+Dm/77uf5YKIuXduY2kpCTxob769evryJEjQb2CLyhsD9mjwP+aAo4MgeFhfpaQFCtWTBztGBsbK9ZRBVO9HGN+hqHMwK1MZmnEuemBIfGBEJgWeB2I415nlh4Y5167+BlDNz0wzIjj3gfiuNdumhu68YGhmxYYBqb/N67dZwc+K7O4wPScvnafR5hZ2cQHQscHHlXJUmVVsGBB+70ynzOicoRM+/btFR4eLvT/zMrJKi5HmJ8z51mr0qpVK7nAYUpjx451vBx+ezoxKxxbtmx5Kh28Nm3a2GP83MrxopyIxsnFrVu3trjdu3e3H4Djszykg8vOJU407tChg8WhLAjAsgGWGZPOphHiqQdlMlSSl1WSO3futEeQkB4IrNbkOeC5QHkcUhWIxzUnOLj1AZfy+bQQh1BhiIHD6cucuuDiseaepdDkdWnRtm1be2At2yNdPMrLDrBmaPPmzZmiLliwwNI9s0Q8IyybZqUpx57wXOqOBGV/AWcTufk4aoX9Be59xjA+Pt5uyskYzz26Oe1EyL0LSG7qzrGM0Il9DRlVFjbosPONs43AYWkI7WaMI/qdgowxVpU05vTQScr2f44wPwu2qlevrunTp4tTx6g0Gy7Yx8oGEA5e5QNruKvQzSZPnmx3J8EExhhbWb5c0rVrV7sBvHbt2mIXE7ufWNPORhI2a3NiGQzEqko2duDuAnherVq1xAehYfbIyEg1bdrU1oeh8IorrrDHBfIgpEXp0qXt0mTqC4NSHzpqTEyM/TwQeC6wxJh3o4F4D3D5asqNN97ooggGoiOzZREGAocFbPv377f1gNF3794tNpk3aNBAMB8Cg/fjFAZWdLKWn/c4VehZLujE7CpjVxjMG4jOPc/ge2EwUWAa19CK8/95HxbmGWMEfdl4D1PWqFEDNAucT4T/nO2UNiLDDwdx8R48M0OS3b7JRhwO+QpMi4iIEAfw0pa0Ad8liI6OPoVCWWzu4cPeAwYMEHuioRF0PoWUAxe+HCjjP4owxthFXDAd2/Bo6P9AciJg0IoVK9rRASLByEjsOMdyN8ZYRoSZIQI6XsOGDe3Z9hDHyX7q3xhjTz+jsWGgHTt22DTwAHuT4Yd4gGhjjOhQgZMmxAdCIC4uNRqMdHzLvAcfie7Xr589lpB4Ohgfo6ZMOgUjglsG6e41S5HpANzTwZCKpJ+ErH8Z3cCHvllJf0YT1AJ84YElIRwAnhkYz3XGONoE+OKLL0g+DRjtOMQLGpyW4NxQDu3G8m2kNvdO9Gn/mcW5CHhwEBpRUVFWzaGjI2Td9JwI/xDmp2KFCxcWwAvyTSniAoF4Y4zdvMHsHC/XpUsXIY2MOTkagG+MsQdCderUyW7mprGzYpDKlSuTRTSKvcjGD/UAQIURCc8E4AK8G9IXqbdx40Z7DCEjR2BeDDLO22e04yQHVIDAdK6NMapUqRKXYlQy5vd3t5FZ/LDeH1ohRdn6mBnazTffLOjKCEydM8M5Uxx5UBmR+rwn94H4dD70bKRyYLx7zT5lRnE6P3sW3PizhTwH4ChG1CGu0fPd9j1b/uym/2HMD8GoeJMmTYRUdCsEEVALAKao0RlRIxj22J/q4gWGMAUbQ4iD0TIbyklDtcD3W6FCBW6zBejg1AVA9TlTJiQceOzSIh/1oPFpHL6blVle1D/qjgBwcTPicZoDcdQdw43rMwF0RR1ApaTDLly4ULx7xjyMNuwPxu5ArUJ/D8ShboH3Ga8RMrwzxysyIqNK8a7gYQthY7Vo0UKoL+5oSxqAjcdHNvgOGeoe6g14pJ0NjDFWmNCpGO2xX8gDHxDmFPwhzA+BOFmYs+gZFo35XZpx6hjDFyEvRcheVwgEZPVi5cqVs0no0RkNKJ4HU7KZm487GPP782ymM/yg01MfbIOs1DM3e6RjS4AL07j1YHaRdCQwYWaAakc8HZcQYHSCuVBfOGUZJsH4Je1swAjCtkpOecbWYJqfA7Iy5jPG2HM+MeQxWh9++GGrh4NnjFGZMmW4zBLolNSTNkSA8TUZ6AS9aTPahNGaAlCxiOead6I9sOHYwA/NqDNfliT9bGCMsZt/GDGxKag/3zJwyz9b/uym5zjz06CTJk2yH1cYNmyY1dcCK4MBi7GINMSzAMMXKlTIzs4xWgTiBl4bc5Kh8esGSkekyZIlS6zdgOSuUqVKYLazXmPM1qtXz25JzGrkcQvh2eDyUQikNJII1Yb0Xbt2EWQKxpysO+/uIqBHUxb1pd54rrA73PSsQpgRu4ZjUZDKqBXQHEkbmAeVjHt0ZoxibBQYEEaik8NI2FHgZAUwKyNynTp1rIMA28JlclRVHBGof7GxseJYF7ccNtXjmUH40YHoABjTvLOLc7aQzo0HCocESxmw/VDBzpYvmPQcZ34kIMds0LBIyDNVpnnz5tZdhWFDo3IcCI2SWR6GVWOMkKKBjUbnYX8srlGYx5iTjJZZGWeKM8aI+pwJJzCNIZ16YNQTD1MQZgYwA3TBZWfMyfqhSqAGYUiipmE0c6BVZvkD4xhpUBUZMflIBUyFB4nnB+aHcd181BObo3379nbbJI4BvD1uelYhONgj5GcTPmoenYx6c813wagHtgcf1qDtAJgWutDZqCOeOTohai7pWT3PjadsrhEuHPWC7s9oP3/+fKJzDHKc+c+lZvjykbrokFlJUI4IROLTsQjP5Tk5nYd64MJF+o8ePfo06ec+i8aGMelYMIEb74aMJnh7eG8YLOM8g4tHSFmMEnR2aIbkBdDtjTF69dVX7QgIrstAXAMwMCohNhj6O25j4rMCngXzoxoZY6zkxyOHkUvncd8bVRBDn435blkYuN26dRN1c4HOjfcHNYayXdyMIWkY84SkITRQ17hmhCPMKcgx5sego8JumLGCbsXRlcFjWEY6YQjhOhw8eLDQK2ESGgfpBh5fKEGCYLSNGDFCcb+5QcnvAqpPxuchKYhjiIehwKUsVDIMPw58Ih1DkTQAPRYVivhA4J245zngce0C9YH5KJMzeGhcGI+6wzwwDPmYuDPGiLJIoxzAmJPeLOY1cAa8/PLLct/dfYYbQjuYj+MSjTF21DTG2M+WMnpAJ1QLygfAJ3TzMzKirqBKIInd+MxC8jHaciYQ6UhhVI+SJUtady76OPF0fFQf3hGbC28cHQ1hZszvdUTNjXRsJlyYjPKU79KCeQDyc8/IgpqDHYTtQDtiG1JfOi7PzCnIEeaHqWBYKsUw7A6L3AMwOYzL9dChQ60UQVfFA+Hq+bjlKINDXHlx7AImYzCoICpuM6SNMYZitNDxcKBP4vlgmHXLIRHmY0KNa9QKPAY8D4k5ZswYe9IZnYAGoEF5DtCuXTuha5LPBRrKHdJZQUh5bhoh0h8GR60wxgjD1dWRGeZRb5BkTCbRwDAo9UNfp97oysYYO1MN46MmYMSCR/ku4C9nzgCGxNPixhPiBoTZoAEdkbyoQLg5CcFxwRhjJwORyG4cIcKFdmKykffFQGbEQs8HwGGUwuVM+xhzsh1QO2FMGJdJSwSAMcZ2YPK4wJmi1JMRnA6A0GNCjTagY9A+AJ0HlYn2ob1Qn+mwjCbYZ255ORHmCPPT+3Gp0bgQjUrT+90KIhkYupB0EHj58uXCO4GkY0YUPIhIA/bu3VsQHcKAQwPSUMwIgucCnhEmb9CBMUAZet00ns0SA+qD9GBIpiyex9DLLDTlUh8MM+oDwNwwqVsOIdIK5qYsbJI4Z+QhPhCoOwwPkzNyMILwPDos9eT9wQcPQxXJTt15d/Rl0gA6Ih4hmBfBQJwLGMZ0XJgTG8mNJ6QDwizUEaaCmRBCuGTJB04g8E64SfEWufEwLsKEkRAVBWFEh4NRMVzBY4Smc9FO3AOMJpxNxLOhL50ZSc0kH+kuwNDQmndHQPAO0Ik22Lp1q6A/Bi38Q/1ZYkE6NMdxAk9BP7e8nAhzhPlzoiJeGR4F/tsU+LMz/3+bXt7z/kIU8Jj/L9SY3qsERwGP+YOjl4f9F+AN0YoAAAAcSURBVKKAx/x/ocb0XiU4CnjMHxy9POy/EAX+DQAA//8y09I3AAAABklEQVQDAIbn9Z01iL6tAAAAAElFTkSuQmCC" alt="PFA Logo">
   </div>
-  <div class="brand">PFA திருநெல்வேலி<small>ஆளுநருக்கு புகார் மனு</small></div>
+  <div class="brand">PFA திருநெல்வேலி<small>ஆளுநருக்கு புகார் மனு இணையதளம்</small></div>
 </div>
 
 <div class="hero">
   <div class="wrap">
-    <div class="hero-badge"><span class="dot"></span> மேலப்பாளையம் · அவசர புகார்</div>
-    <h1>தெருநாய் கொடுமையை நிறுத்த ஆளுநருக்கு நேரடியாக புகார் அனுப்புங்கள்</h1>
-    <p class="lede">உங்கள் பெயரில் தனிப்பட்ட புகார் மனுவை உருவாக்கி PDF-ஆக பதிவிறக்கம் செய்யவும் அல்லது மின்னஞ்சல் மூலம் ஆளுநர் மாளிகைக்கு நேரடியாக அனுப்பவும். Speed Post மூலமும் அனுப்பலாம்.</p>
+    <div class="hero-badge"><span class="dot"></span> மேலப்பாளையம் · அவசர புகார் மனு</div>
+    <h1>தெருநாய் கொடுமையை தடுக்க தமிழ்நாடு ஆளுநருக்கு நேரடியாக புகார் அனுப்புங்கள்</h1>
+    <p class="lede">உங்கள் பெயரில் தனிப்பட்ட புகார் மனுவை உருவாக்கி PDF-ஆக பதிவிறக்கி Speed Post வழியாக அனுப்பலாம், அல்லது ஒரே கிளிக்கில் தமிழ்நாடு ஆளுநரின் அதிகாரப்பூர்வ மின்னஞ்சலுக்கு (Email) அனுப்பலாம்.</p>
 
     <div class="lang-toggle">
       <button class="lang-btn active" id="btnTa" type="button">தமிழ்</button>
       <button class="lang-btn" id="btnEn" type="button">English</button>
     </div>
 
-    <div class="recipient-card">
-      <b>பெறுநர்</b>
-      மாண்புமிகு தமிழ்நாடு ஆளுநர் அவர்கள்<br>Governor Secretariat, Lok Bhavan – Tamil Nadu,<br>Guindy, Chennai – 600022.
-      <div style="margin-top:8px;font-size:12px;color:#5a655e;">
-        📧 மின்னஞ்சல்: <a href="mailto:govtam@nic.in" style="color:#1a73e8;">govtam@nic.in</a>
+    <div class="recipient-banner">
+      <div>
+        <b>பெறுநர்: மாண்புமிகு தமிழ்நாடு ஆளுநர் அவர்கள்</b>
+        Governor Secretariat, Lok Bhavan – Tamil Nadu, Guindy, Chennai – 600022.
+      </div>
+      <div>
+        📧 மின்னஞ்சல்: <a href="mailto:govtam@nic.in" style="font-weight:700;color:#1a73e8;">govtam@nic.in</a>
       </div>
     </div>
   </div>
@@ -169,56 +161,53 @@ footer p{font-size:11.5px;color:#647065;margin:4px 0;}
 
 <section>
   <div class="wrap">
-    <div class="kicker">உங்கள் விவரங்கள்</div>
-    <h2 style="font-size:19px;">புகார் அனுப்புபவர் — நீங்கள்</h2>
-    <p>இங்கு நீங்கள் நிரப்பும் விவரங்களே மனுவில் "அனுப்புநர்" பகுதியில் இடம்பெறும். உங்கள் பெயரில் தனிப்பட்ட முறையில் புகார் அனுப்பப்படும்.</p>
+    <div class="main-grid">
+      <div>
+        <div class="kicker">உங்கள் விவரங்கள்</div>
+        <h2 style="margin-bottom:8px;">புகார் அனுப்புபவர்</h2>
+        <p style="margin-top:0;margin-bottom:16px;font-size:13.5px;">இங்கு நீங்கள் பூர்த்தி செய்யும் விவரங்களே மனுவில் "அனுப்புநர்" பகுதியில் இடம்பெறும்.</p>
 
-    <div class="form-card">
-      <div class="field">
-        <label for="fname">முழுப்பெயர்</label>
-        <input type="text" id="fname" placeholder="உங்கள் பெயர்">
+        <div class="form-card">
+          <div class="field">
+            <label for="fname">முழுப்பெயர் *</label>
+            <input type="text" id="fname" placeholder="உங்கள் பெயர்">
+          </div>
+          <div class="field">
+            <label for="faddr">முழு முகவரி (அஞ்சல் பதிலுக்கு) *</label>
+            <textarea id="faddr" rows="3" placeholder="வீட்டு எண், தெரு, ஊர், மாவட்டம், பின்கோடு"></textarea>
+          </div>
+          <div class="field">
+            <label for="fplace">ஊர் / இடம் *</label>
+            <input type="text" id="fplace" placeholder="எ.கா. திருநெல்வேலி">
+          </div>
+          <div class="field">
+            <label for="fmobile">மொபைல் எண் (விருப்பத்திற்குரியது)</label>
+            <input type="tel" id="fmobile" placeholder="10 இலக்க மொபைல் எண்" maxlength="10">
+          </div>
+          <div id="formErr" class="err">தயவுசெய்து பெயர், முகவரி, ஊர் ஆகியவற்றை நிரப்பவும்.</div>
+          <div class="privacy-note">🔒 உங்கள் முகவரி சேமிக்கப்படாது, உங்கள் சாதனத்தில் PDF / மின்னஞ்சல் உருவாக்க மட்டுமே பயன்படும்.</div>
+
+          <button class="btn btn-primary" id="downloadBtn" type="button">📄 PDF பதிவிறக்கம் செய்ய (Speed Post-க்கு)</button>
+          <div class="success-box" id="successBox">✅ PDF பதிவிறக்கம் ஆகிவிட்டது! பிரிண்ட் செய்து கையொப்பமிட்டு Speed Post-ல் அனுப்பவும்.</div>
+
+          <div class="action-divider">அல்லது உடனடி மின்னஞ்சல்</div>
+
+          <button class="btn btn-email" id="emailBtn" type="button">✉️ ஆளுநருக்கு Email அனுப்ப</button>
+          <div class="email-success-box" id="emailSuccessBox"></div>
+        </div>
       </div>
-      <div class="field">
-        <label for="faddr">முழு முகவரி (அஞ்சல் பதிலுக்கு)</label>
-        <textarea id="faddr" rows="3" placeholder="வீட்டு எண், தெரு, ஊர், மாவட்டம், பின்கோடு"></textarea>
+
+      <div class="preview-col">
+        <div class="counter-row">
+          <div class="counter-num" id="counterNum">0</div>
+          <div class="counter-label">பேர் இதுவரை இந்த புகார் மனுவை ஆளுநருக்கு சமர்ப்பித்துள்ளனர்</div>
+        </div>
+
+        <div class="letter-box">
+          <h3>மனுவின் முழு உரை (Live Preview)</h3>
+          <div class="letter-preview-body" id="previewBody"></div>
+        </div>
       </div>
-      <div class="field">
-        <label for="fplace">ஊர் / இடம் (கையொப்பத்திற்கு கீழ்)</label>
-        <input type="text" id="fplace" placeholder="எ.கா. திருநெல்வேலி">
-      </div>
-      <div class="field">
-        <label for="fmobile">மொபைல் எண் (விருப்பத்திற்குரியது)</label>
-        <input type="tel" id="fmobile" placeholder="10 இலக்க மொபைல் எண்" maxlength="10">
-      </div>
-      <div id="formErr" class="err">தயவுசெய்து பெயர், முகவரி, ஊர் ஆகியவற்றை நிரப்பவும்.</div>
-      <div class="privacy-note">உங்கள் பெயர் / ஊர் மட்டும் கீழே உள்ள மொத்த எண்ணிக்கையில் சேர்க்கப்படும் — வேறு யாருக்கும் காட்டப்படாது. முகவரி PDF-ல் மட்டும் உள்ளது, இங்கு சேமிக்கப்படாது.</div>
-
-      <!-- PDF Download Button -->
-      <button class="btn btn-primary" id="downloadBtn" type="button">📄 PDF பதிவிறக்கம் செய்ய</button>
-      <div class="success-box" id="successBox">✅ PDF பதிவிறக்கம் ஆகிவிட்டது! கீழே உள்ள படிகளைப் பின்பற்றி அனுப்பவும். உங்கள் ஆதரவுக்கு நன்றி.</div>
-
-      <div class="action-divider">அல்லது</div>
-
-      <!-- Email Button -->
-      <button class="btn btn-email" id="emailBtn" type="button">✉️ Gmail மூலம் ஆளுநருக்கு அனுப்ப</button>
-      <div class="email-success-box" id="emailSuccessBox">✅ முழு மனு clipboard-ல் நகலெடுக்கப்பட்டது! Gmail திறக்கப்படும். Body-ல் Ctrl+V ஒட்டி Send அழுத்தவும்.</div>
-    </div>
-
-    <!-- Governor email info -->
-    <div class="email-info-card">
-      <b>🏛️ ஆளுநர் மாளிகை — மின்னஞ்சல் முகவரி</b>
-      தமிழ்நாடு ஆளுநர் செயலக மின்னஞ்சல்: <a href="mailto:govtam@nic.in">govtam@nic.in</a><br>
-      <span style="font-size:12px;color:#3a5a8e;">Speed Post மற்றும் Gmail — இரண்டு வழிகளிலும் அனுப்புவது அதிக பலன் தரும்.</span>
-    </div>
-
-    <details class="letter">
-      <summary>மனுவின் முழு உரையைப் படிக்க <span class="chev">▾</span></summary>
-      <div class="letter-preview-body" id="previewBody"></div>
-    </details>
-
-    <div class="counter-row">
-      <div class="counter-num" id="counterNum">0</div>
-      <div class="counter-label">பேர் இதுவரை இந்த புகாரை ஆளுநருக்கு அனுப்பியுள்ளனர்</div>
     </div>
   </div>
 </section>
@@ -226,52 +215,58 @@ footer p{font-size:11.5px;color:#647065;margin:4px 0;}
 <section class="alt">
   <div class="wrap">
     <div class="kicker">அடுத்து என்ன செய்வது</div>
-    <h2 style="font-size:19px;">PDF-ஐ Speed Post மூலம் அனுப்பும் முறை</h2>
+    <h2 style="font-size:20px;">Speed Post மூலம் அனுப்பும் முறை</h2>
     <ul class="step-list">
-      <li><p>பதிவிறக்கம் செய்த PDF-ஐ திறந்து, A4 தாளில் பிரிண்ட் செய்யவும்.</p></li>
+      <li><p>பதிவிறக்கம் செய்த PDF-ஐ திறந்து, A4 தாளில் பிரிண்ட் எடுக்கவும்.</p></li>
       <li><p>மனுவின் கீழே உங்கள் கையொப்பம் இடவும்.</p></li>
-      <li><p>அருகிலுள்ள அஞ்சல் நிலையத்திற்குச் சென்று, <b>India Post Speed Post</b> மூலம் அனுப்பவும்.</p></li>
-      <li><p>கீழே உள்ள முகவரியை உறையின் மீது எழுதவும்:</p></li>
+      <li><p>அருகிலுள்ள அஞ்சல் நிலையத்திற்குச் சென்று <b>India Post Speed Post</b> மூலம் அனுப்பவும்.</p></li>
+      <li><p>கீழே உள்ள முகவரியை அஞ்சல் உறையின் மீது எழுதவும்:</p></li>
     </ul>
-    <div class="recipient-card" style="margin-top:4px;">
-      <b>மாண்புமிகு தமிழ்நாடு ஆளுநர் அவர்கள்</b>
-      Governor Secretariat, Lok Bhavan – Tamil Nadu,<br>Guindy, Chennai – 600022.
-      <div style="margin-top:10px;"><button class="chip-btn" id="copyAddr">📋 முகவரியை நகலெடுக்க</button></div>
+    <div class="recipient-banner" style="margin-top:14px;background:#fff;">
+      <div>
+        <b>மாண்புமிகு தமிழ்நாடு ஆளுநர் அவர்கள்</b>
+        Governor Secretariat, Lok Bhavan – Tamil Nadu, Guindy, Chennai – 600022.
+      </div>
+      <div>
+        <button class="chip-btn" id="copyAddr">📋 முகவரியை நகலெடுக்க</button>
+      </div>
     </div>
   </div>
 </section>
 
 <footer>
   <p>People For Animals (PFA) — திருநெல்வேலி</p>
-  <p>இந்த கருவி ஒரு சுயாதீன குடிமக்கள் முயற்சி. உங்கள் பெயரில் அனுப்பப்படும் மனுவிற்கு நீங்களே பொறுப்பு.</p>
+  <p>இந்த தளம் விலங்கு வன்கொடுமைக்கு எதிரான குடிமக்கள் விழிப்புணர்வு முயற்சியாகும்.</p>
 </footer>
 
-<!-- Hidden A4 templates rendered off-screen for PDF capture -->
-<div class="print-template ta" id="tplTa"></div>
-<div class="print-template en" id="tplEn"></div>
-
-<!-- Email modal -->
 <div class="modal-backdrop" id="emailModal">
   <div class="modal-box">
     <div class="modal-head">
-      <h3>✉️ ஆளுநருக்கு மின்னஞ்சல் அனுப்பு</h3>
+      <h3>✉️ ஆளுநருக்கு மின்னஞ்சல் அனுப்புதல் (Gmail / Webmail)</h3>
       <button class="modal-close" id="modalClose">✕</button>
     </div>
     <div class="modal-body">
       <p style="font-size:13px;color:#3a453d;margin:0 0 10px;">
-        கீழே உள்ள முழு மனு தயாராக உள்ளது. <b>படி 1</b> — Copy அழுத்தவும். <b>படி 2</b> — Gmail திறக்கவும். <b>படி 3</b> — Gmail Body-ல் கிளிக் செய்து <kbd style="background:#eee;border:1px solid #bbb;padding:1px 6px;border-radius:4px;font-family:monospace;font-size:12px;">Ctrl + V</kbd> அழுத்தி ஒட்டவும். <b>படி 4</b> — Send!
+        கீழே உங்கள் விவரங்களுடன் முழு மனு தயாராக உள்ளது. <br>
+        1. <b>Copy</b> அழுத்தவும். <br>
+        2. <b>Gmail திற</b> அழுத்தவும் (To: govtam@nic.in தானாக இருக்கும்). <br>
+        3. Gmail-ன் Message பகுதியில் <kbd style="background:#eee;border:1px solid #bbb;padding:1px 6px;border-radius:4px;font-family:monospace;font-size:12px;">Ctrl + V</kbd> அழுத்தி Paste செய்து <b>Send</b> செய்யவும்.
       </p>
       <textarea class="modal-letter" id="modalLetter" readonly></textarea>
     </div>
     <div class="modal-foot">
-      <button class="btn btn-copy" id="modalCopyBtn" type="button">📋 படி 1 — மனுவை Copy செய்</button>
-      <button class="btn btn-email" id="modalGmailBtn" type="button" style="margin-top:0;">✉️ படி 2 — Gmail திற &amp; Paste செய்</button>
+      <button class="btn btn-copy" id="modalCopyBtn" type="button">📋 படி 1: மனுவை Copy செய்</button>
+      <button class="btn btn-email" id="modalGmailBtn" type="button" style="margin-top:0;">✉️ படி 2: Gmail திறந்து Paste செய்</button>
     </div>
   </div>
 </div>
 
+<div class="print-template ta" id="tplTa"></div>
+<div class="print-template en" id="tplEn"></div>
+
 <script>
-const LETTER_TA = `மாண்புமிகு தமிழ்நாடு ஆளுநர் அவர்களுக்கு,
+const GOVERNOR_EMAIL = 'govtam@nic.in';
+const COUNTER_KEY = 'pfa_governor_complaint_count';const LETTER_TA = `மாண்புமிகு தமிழ்நாடு ஆளுநர் அவர்களுக்கு,
 Governor Secretariat, Lok Bhavan – Tamil Nadu,
 Guindy, Chennai – 600022.
 
@@ -373,7 +368,6 @@ Guindy, Chennai – 600022.
 தொடர்பு எண்: {{MOBILE}}
 தேதி: {{DATE}}
 இடம்: {{PLACE}}`;
-
 const LETTER_EN = `To,
 The Hon'ble Governor of Tamil Nadu,
 Governor Secretariat, Lok Bhavan – Tamil Nadu,
@@ -477,8 +471,6 @@ Yours sincerely,
 Contact number: {{MOBILE}}
 Date: {{DATE}}
 Place: {{PLACE}}`;
-
-const GOVERNOR_EMAIL = 'govtam@nic.in';
 let currentLang = 'ta';
 
 function $(id){ return document.getElementById(id); }
@@ -499,10 +491,18 @@ function fillTemplate(tpl, data){
 }
 
 function updatePreview(){
-  const data = {name:'[உங்கள் பெயர்]', address:'[உங்கள் முகவரி]', mobile:'[மொபைல்]', date: todayStr(), place:'[ஊர்]'};
+  const name = $('fname').value.trim() || '[உங்கள் பெயர்]';
+  const address = $('faddr').value.trim() || '[உங்கள் முகவரி]';
+  const place = $('fplace').value.trim() || '[ஊர்]';
+  const mobile = $('fmobile').value.trim() || '[மொபைல்]';
+  const data = {name, address, mobile, date: todayStr(), place};
   const tpl = currentLang === 'ta' ? LETTER_TA : LETTER_EN;
   $('previewBody').textContent = fillTemplate(tpl, data);
 }
+
+['fname','faddr','fplace','fmobile'].forEach(id => {
+  $(id).addEventListener('input', updatePreview);
+});
 
 $('btnTa').addEventListener('click', ()=>{
   currentLang = 'ta';
@@ -516,16 +516,11 @@ $('btnEn').addEventListener('click', ()=>{
 });
 updatePreview();
 
-/* ── Counter: use localStorage (works in any browser, no server needed) ── */
-const COUNTER_KEY = 'pfa_governor_complaint_count';
-
 function loadCounter(){
   try{
     const val = localStorage.getItem(COUNTER_KEY);
     $('counterNum').textContent = val ? val : '0';
-  }catch(e){
-    $('counterNum').textContent = '0';
-  }
+  }catch(e){ $('counterNum').textContent = '0'; }
 }
 
 function incrementCounter(){
@@ -534,17 +529,15 @@ function incrementCounter(){
     const next = current + 1;
     localStorage.setItem(COUNTER_KEY, String(next));
     $('counterNum').textContent = String(next);
-  }catch(e){ console.error('Counter error:', e); }
+  }catch(e){}
 }
-
 loadCounter();
 
-/* ── Validate form fields, return data or null ── */
 function getFormData(){
-  const name    = $('fname').value.trim();
+  const name = $('fname').value.trim();
   const address = $('faddr').value.trim();
-  const place   = $('fplace').value.trim();
-  const mobile  = $('fmobile').value.trim();
+  const place = $('fplace').value.trim();
+  const mobile = $('fmobile').value.trim();
   if(!name || !address || !place){
     $('formErr').style.display = 'block';
     return null;
@@ -553,7 +546,7 @@ function getFormData(){
   return { name, address, mobile, date: todayStr(), place };
 }
 
-/* ── PDF Download ── */
+/* PDF Download */
 $('downloadBtn').addEventListener('click', async ()=>{
   const data = getFormData();
   if(!data) return;
@@ -601,38 +594,95 @@ $('downloadBtn').addEventListener('click', async ()=>{
     alert('PDF உருவாக்கத்தில் சிக்கல் ஏற்பட்டது. மீண்டும் முயற்சிக்கவும்.');
   }finally{
     btn.disabled = false;
-    btn.textContent = '📄 PDF பதிவிறக்கம் செய்ய';
+    btn.textContent = '📄 PDF பதிவிறக்கம் செய்ய (Speed Post-க்கு)';
   }
 });
 
-/* ── Email to Governor — Modal flow ── */
-let _gmailURL = '';
+/* Smart Email Button (Mobile mailto vs Desktop Modal) */
+let _desktopGmailURL = '';
 
 $('emailBtn').addEventListener('click', ()=>{
   const data = getFormData();
   if(!data) return;
 
+  const isMobile = /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
   const subjectTa = 'புகார் மனு: மேலப்பாளையம் தெருநாய் கொடுமை — உடனடி நடவடிக்கை கோரிக்கை';
   const subjectEn = 'Complaint: Cruelty to Street Dogs in Melapalayam, Tirunelveli — Request for Immediate Action';
   const subject = currentLang === 'ta' ? subjectTa : subjectEn;
+  const fullTpl = currentLang === 'ta' ? LETTER_TA : LETTER_EN;
+  const fullBody = fillTemplate(fullTpl, data);
 
-  // Full complaint letter
-  const tpl  = currentLang === 'ta' ? LETTER_TA : LETTER_EN;
-  const body = fillTemplate(tpl, data);
+  if(isMobile){
+    // Mobile: triggers native Gmail / Email client directly!
+    const mobileBodyTa =
+`மாண்புமிகு தமிழ்நாடு ஆளுநர் அவர்களுக்கு,
+Governor Secretariat, Lok Bhavan – Tamil Nadu, Guindy, Chennai – 600022.
 
-  // Store Gmail URL (To + Subject only — no body in URL to avoid 413)
-  _gmailURL = 'https://mail.google.com/mail/?view=cm&fs=1'
-    + '&to=' + encodeURIComponent(GOVERNOR_EMAIL)
-    + '&su=' + encodeURIComponent(subject);
+வணக்கம். நான் ${data.name}, திருநெல்வேலி மேலப்பாளையம் பகுதியில் தெருநாய்கள் மற்றும் நாய்க்குட்டிகள் மீதான தொடர்ச்சியான கொடுமைகள் மற்றும் சட்டவிரோத கொலை முயற்சிகள் குறித்து இந்த அவசரப் புகாரை சமர்ப்பிக்கிறேன்.
 
-  // Show modal with letter pre-filled
-  $('modalLetter').value = body;
-  $('emailModal').classList.add('open');
-  $('modalCopyBtn').textContent = '📋 படி 1 — மனுவை Copy செய்';
-  $('modalCopyBtn').classList.remove('copied');
+முக்கிய கோரிக்கைகள்:
+1. உயர்மட்ட விசாரணை குழு அமைத்தல்
+2. நாய்கள் விஷம் வைத்து மற்றும் அடித்து கொல்லப்படுவதை தடுத்தல்
+3. நிரந்தர ABC கருத்தடை திட்டம் மற்றும் ரேபிஸ் தடுப்பூசி
+4. இரவு நேர காவல்துறை ரோந்து மற்றும் விழிப்புணர்வு
+
+அனுப்புநர் விவரங்கள்:
+பெயர்: ${data.name}
+முகவரி: ${data.address}
+தொடர்பு: ${data.mobile || '—'}
+தேதி: ${data.date}
+இடம்: ${data.place}
+
+(முழு மனுவின் அச்சிடப்பட்ட விரிவான நகல் Speed Post மூலமும் தங்களுக்கு அனுப்பப்படுகிறது)`;
+
+    const mobileBodyEn =
+`To,
+The Hon'ble Governor of Tamil Nadu,
+Governor Secretariat, Lok Bhavan – Tamil Nadu, Guindy, Chennai – 600022.
+
+Respected Governor,
+I, ${data.name}, am submitting this urgent complaint regarding continuous cruelty and illegal attempts to kill street dogs & puppies in Melapalayam, Tirunelveli.
+
+Key Requests:
+1. High-level inquiry committee
+2. Stop poisoning, beatings and firecracker cruelty
+3. Permanent ABC sterilization & anti-rabies vaccination
+4. Strict police patrolling at night
+
+Sender Details:
+Name: ${data.name}
+Address: ${data.address}
+Contact: ${data.mobile || '—'}
+Date: ${data.date}
+Place: ${data.place}
+
+(A signed printed detailed petition is also being dispatched via India Post Speed Post)`;
+
+    const mBody = currentLang === 'ta' ? mobileBodyTa : mobileBodyEn;
+    const mailtoUri = 'mailto:' + encodeURIComponent(GOVERNOR_EMAIL)
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body=' + encodeURIComponent(mBody);
+
+    incrementCounter();
+    window.location.href = mailtoUri;
+
+    $('emailSuccessBox').style.display = 'block';
+    $('emailSuccessBox').innerHTML = '📱 உங்கள் மொபைல் மின்னஞ்சல் செயலி (Gmail App) திறக்கப்படும். Send பொத்தானை அழுத்தவும்!';
+  } else {
+    // Desktop: Modal flow to avoid URL 413 error and allow clean copy-paste into Gmail Web
+    _desktopGmailURL = 'https://mail.google.com/mail/?view=cm&fs=1'
+      + '&to=' + encodeURIComponent(GOVERNOR_EMAIL)
+      + '&su=' + encodeURIComponent(subject);
+
+    $('modalLetter').value = fullBody;
+    $('emailModal').classList.add('open');
+    $('modalCopyBtn').textContent = '📋 படி 1: மனுவை Copy செய்';
+    $('modalCopyBtn').classList.remove('copied');
+  }
 });
 
-// Copy button inside modal
+/* Modal actions */
 $('modalCopyBtn').addEventListener('click', async ()=>{
   const text = $('modalLetter').value;
   let copied = false;
@@ -640,42 +690,32 @@ $('modalCopyBtn').addEventListener('click', async ()=>{
     await navigator.clipboard.writeText(text);
     copied = true;
   } catch(e) {
-    // fallback: select textarea text
     $('modalLetter').select();
-    try { document.execCommand('copy'); copied = true; } catch(e2){}
+    try { document.execCommand('copy'); copied = true; } catch(err){}
   }
-  if(copied){
-    $('modalCopyBtn').textContent = '✅ நகலெடுக்கப்பட்டது! இப்போது படி 2 அழுத்தவும்';
-    $('modalCopyBtn').classList.add('copied');
-  }
+  $('modalCopyBtn').textContent = '✅ நகலெடுக்கப்பட்டது! இப்போது படி 2 அழுத்தவும்';
+  $('modalCopyBtn').classList.add('copied');
 });
 
-// Gmail button inside modal
 $('modalGmailBtn').addEventListener('click', ()=>{
-  window.open(_gmailURL, '_blank');
+  window.open(_desktopGmailURL, '_blank');
   incrementCounter();
   $('emailModal').classList.remove('open');
   $('emailSuccessBox').style.display = 'block';
-  $('emailSuccessBox').innerHTML =
-    '✅ Gmail திறக்கப்பட்டது! Gmail Body-ல் கிளிக் செய்து '
-    + '<kbd style="background:#d0e8ff;border:1px solid #90bfe0;padding:1px 7px;border-radius:4px;font-family:monospace;font-size:12px;">Ctrl + V</kbd>'
-    + ' அழுத்தி மனுவை ஒட்டவும். பின்னர் <b>Send</b> அழுத்தவும்!'
-    + '<br><small style="opacity:.75">மீண்டும் Copy வேண்டுமா? மேலே உள்ள "Gmail மூலம் அனுப்ப" பொத்தானை அழுத்தவும்.</small>';
+  $('emailSuccessBox').innerHTML = '✅ Gmail திறக்கப்பட்டது! Message பகுதியில் <kbd style="background:#e8f0fe;border:1px solid #c2d7fe;padding:2px 6px;border-radius:4px;font-family:monospace">Ctrl + V</kbd> அழுத்தி Paste செய்து <b>Send</b> அழுத்தவும்.';
 });
 
-// Close modal
 $('modalClose').addEventListener('click', ()=>{ $('emailModal').classList.remove('open'); });
 $('emailModal').addEventListener('click', (e)=>{ if(e.target === $('emailModal')) $('emailModal').classList.remove('open'); });
 
-/* ── Copy address ── */
+/* Copy address */
 $('copyAddr').addEventListener('click', async ()=>{
   try{
-    await navigator.clipboard.writeText('மாண்புமிகு தமிழ்நாடு ஆளுநர் அவர்கள்\nஆளுநர் மாளிகை, கிண்டி, சென்னை – 600022.');
+    await navigator.clipboard.writeText('மாண்புமிகு தமிழ்நாடு ஆளுநர் அவர்கள்\nGovernor Secretariat, Lok Bhavan – Tamil Nadu, Guindy, Chennai – 600022.');
     $('copyAddr').textContent = '✓ நகலெடுக்கப்பட்டது';
     setTimeout(()=>{ $('copyAddr').textContent = '📋 முகவரியை நகலெடுக்க'; }, 1800);
   }catch(e){}
 });
 </script>
-
 </body>
 </html>
