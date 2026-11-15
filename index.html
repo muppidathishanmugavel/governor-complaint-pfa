@@ -181,7 +181,7 @@ footer p{font-size:11.5px;color:#647065;margin:4px 0;}
 
       <!-- Email Button -->
       <button class="btn btn-email" id="emailBtn" type="button">✉️ Gmail மூலம் ஆளுநருக்கு அனுப்ப</button>
-      <div class="email-success-box" id="emailSuccessBox">✅ Gmail கம்போஸ் புதிய Tab-ல் திறக்கப்படும். முழு புகார் மனுவும் தானாக நிரப்பப்படும். Send அழுத்தவும்!</div>
+      <div class="email-success-box" id="emailSuccessBox">✅ முழு மனு clipboard-ல் நகலெடுக்கப்பட்டது! Gmail திறக்கப்படும். Body-ல் Ctrl+V ஒட்டி Send அழுத்தவும்.</div>
     </div>
 
     <!-- Governor email info -->
@@ -566,7 +566,7 @@ $('downloadBtn').addEventListener('click', async ()=>{
 });
 
 /* ── Email to Governor ── */
-$('emailBtn').addEventListener('click', ()=>{
+$('emailBtn').addEventListener('click', async ()=>{
   const data = getFormData();
   if(!data) return;
 
@@ -574,25 +574,40 @@ $('emailBtn').addEventListener('click', ()=>{
   const subjectEn = 'Complaint: Cruelty to Street Dogs in Melapalayam, Tirunelveli — Request for Immediate Action';
 
   const subject = currentLang === 'ta' ? subjectTa : subjectEn;
-  // Send the FULL complaint letter as the email body
+  // Full complaint letter
   const tpl  = currentLang === 'ta' ? LETTER_TA : LETTER_EN;
   const body = fillTemplate(tpl, data);
 
-  // Gmail web compose URL — handles long bodies unlike mailto:
+  // Step 1: Copy full letter to clipboard
+  let copied = false;
+  try {
+    await navigator.clipboard.writeText(body);
+    copied = true;
+  } catch(e) {
+    // Fallback: select from a hidden textarea
+    const ta = document.createElement('textarea');
+    ta.value = body;
+    ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;';
+    document.body.appendChild(ta);
+    ta.focus(); ta.select();
+    try { document.execCommand('copy'); copied = true; } catch(e2){}
+    document.body.removeChild(ta);
+  }
+
+  // Step 2: Open Gmail compose with only To + Subject (no body — avoids 413 error)
   const gmailURL = 'https://mail.google.com/mail/?view=cm&fs=1'
-    + '&to='   + encodeURIComponent(GOVERNOR_EMAIL)
-    + '&su='   + encodeURIComponent(subject)
-    + '&body=' + encodeURIComponent(body);
+    + '&to=' + encodeURIComponent(GOVERNOR_EMAIL)
+    + '&su=' + encodeURIComponent(subject);
 
   window.open(gmailURL, '_blank');
 
+  // Step 3: Show paste instruction
   incrementCounter();
   $('emailSuccessBox').style.display = 'block';
-  $('emailSuccessBox').innerHTML =
-    '✅ Gmail கம்போஸ் புதிய Tab-ல் திறக்கப்பட்டுள்ளது! முழு புகார் மனுவும் தானாக நிரப்பப்பட்டுள்ளது.'
-    + ' <b>Send</b> பொத்தானை அழுத்தவும்.'
-    + '<br><small style="opacity:.75">திறக்கவில்லையா? '
-    + '<a href="' + gmailURL + '" target="_blank" style="color:#1a73e8;">இங்கே கிளிக் செய்யவும்</a></small>';
+  $('emailSuccessBox').innerHTML = copied
+    ? '✅ <b>முழு மனு clipboard-ல் நகலெடுக்கப்பட்டது!</b> Gmail புதிய Tab-ல் திறக்கப்பட்டது.'
+      + ' Gmail-ல் Body பகுதியில் கிளிக் செய்து <kbd style="background:#eee;border:1px solid #ccc;padding:1px 5px;border-radius:3px;font-family:monospace">Ctrl + V</kbd> அழுத்தி ஒட்டவும். பின்னர் <b>Send</b> அழுத்தவும்!'
+    : '⚠️ Gmail திறக்கப்பட்டது. மனுவை கீழே உள்ள "மனுவின் முழு உரையைப் படிக்க" பகுதியில் இருந்து நகலெடுத்து Body-ல் ஒட்டவும்.';
 });
 
 /* ── Copy address ── */
