@@ -242,21 +242,21 @@ footer p{font-size:12px;color:#647065;margin:4px 0;}
 <div class="modal-backdrop" id="emailModal">
   <div class="modal-box">
     <div class="modal-head">
-      <h3>✉️ ஆளுநருக்கு மின்னஞ்சல் அனுப்புதல் (Gmail / Webmail)</h3>
+      <h3>✉️ ஆளுநருக்கு முழு புகார் மனுவை அனுப்பவும்</h3>
       <button class="modal-close" id="modalClose">✕</button>
     </div>
     <div class="modal-body">
-      <p style="font-size:13px;color:#3a453d;margin:0 0 10px;">
-        கீழே உங்கள் விவரங்களுடன் முழு மனு தயாராக உள்ளது. <br>
-        1. <b>Copy</b> அழுத்தவும். <br>
-        2. <b>Gmail திற</b> அழுத்தவும் (To: govtam@nic.in தானாக இருக்கும்). <br>
-        3. Gmail-ன் Message பகுதியில் <kbd style="background:#eee;border:1px solid #bbb;padding:1px 6px;border-radius:4px;font-family:monospace;font-size:12px;">Ctrl + V</kbd> அழுத்தி Paste செய்து <b>Send</b> செய்யவும்.
-      </p>
+      <div style="background:#f4f9f4;border:1.5px solid #5C7A5E;border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:13px;color:#1e3522;line-height:1.6;">
+        <b>எளிதான 2 படிகள் (Mobile &amp; Computer):</b><br>
+        1️⃣ <b>"படி 1: முழு மனுவை Copy செய்"</b> பொத்தானை அழுத்தவும் (100% முழு மனுவும் நகலெடுக்கப்படும்).<br>
+        2️⃣ <b>"படி 2: மின்னஞ்சல் / Gmail திற"</b> அழுத்தவும்.<br>
+        3️⃣ திறக்கும் மின்னஞ்சலில் (Message பகுதியில்) விரலால் அழுத்திப்பிடித்து <b>Paste</b> செய்யவும் (கணினியில் <kbd>Ctrl + V</kbd>), பின் <b>Send</b> செய்யவும்!
+      </div>
       <textarea class="modal-letter" id="modalLetter" readonly></textarea>
     </div>
     <div class="modal-foot">
-      <button class="btn btn-copy" id="modalCopyBtn" type="button">📋 படி 1: மனுவை Copy செய்</button>
-      <button class="btn btn-email" id="modalGmailBtn" type="button" style="margin-top:0;">✉️ படி 2: Gmail திறந்து Paste செய்</button>
+      <button class="btn btn-copy" id="modalCopyBtn" type="button">📋 படி 1: முழு மனுவை Copy செய்</button>
+      <button class="btn btn-email" id="modalGmailBtn" type="button" style="margin-top:0;">✉️ படி 2: மின்னஞ்சல் / Gmail திற</button>
     </div>
   </div>
 </div>
@@ -615,10 +615,10 @@ $('downloadBtn').addEventListener('click', async ()=>{
   }
 });
 
-/* Smart Email Button (Mobile mailto vs Desktop Modal) */
-let _desktopGmailURL = '';
+/* Email Flow: Unified for Mobile and Desktop with 100% full content */
+let _activeMailUrl = '';
 
-$('emailBtn').addEventListener('click', ()=>{
+$('emailBtn').addEventListener('click', async ()=>{
   const data = getFormData();
   if(!data) return;
 
@@ -630,75 +630,34 @@ $('emailBtn').addEventListener('click', ()=>{
   const fullTpl = currentLang === 'ta' ? LETTER_TA : LETTER_EN;
   const fullBody = fillTemplate(fullTpl, data);
 
+  // Set target email destination
   if(isMobile){
-    // Mobile: triggers native Gmail / Email client directly!
-    const mobileBodyTa =
-`மாண்புமிகு தமிழ்நாடு ஆளுநர் அவர்களுக்கு,
-Governor Secretariat, Lok Bhavan – Tamil Nadu, Guindy, Chennai – 600022.
-
-வணக்கம். நான் \${data.name}, People For Animals (PFA) திருநெல்வேலி அமைப்புடன் இணைந்து, திருநெல்வேலி மேலப்பாளையம் பகுதியில் தெருநாய்கள், நாய்க்குட்டிகள், மாடுகள் மீதான கொடூரத் தாக்குதல்கள், 12 ஆயுதக் கும்பல்கள் மற்றும் தாய்நாய் சித்திரவதைக் கொலை குறித்து அவசரப் புகார் மனு சமர்ப்பிக்கிறேன்.
-
-முக்கிய கோரிக்கைகள்:
-1. ஆட்சியர் தலைமையில் உயர்மட்ட விசாரணை குழு அமைத்தல்
-2. இரும்புக் கம்பி தாக்குதல், விஷம் வைத்தல், தாய்நாய் சித்திரவதை சம்பவங்கள் மீது குற்ற நடவடிக்கை
-3. மேலப்பாளையம் காவல் நிலையத்திற்கு கூடுதல் வாகனங்கள் & தீவிர இரவு ரோந்து
-4. நிரந்தர ABC கருத்தடை & ரேபிஸ் தடுப்பூசி திட்டம்
-5. இமாம்கள் & ஜமாத் நிர்வாகிகளுடன் அமைதி ஆலோசனைக் கூட்டங்கள்
-
-அனுப்புநர் விவரங்கள்:
-பெயர்: \${data.name}
-முகவரி: \${data.address}
-People For Animals (PFA), Tirunelveli விலங்கு நல அமைப்புடன் இணைந்து
-தொடர்பு: \${data.mobile || '—'}
-தேதி: \${data.date}
-இடம்: \${data.place}
-
-(முழு மனுவின் அச்சிடப்பட்ட நகல் Speed Post மூலமும் அனுப்பப்படுகிறது)`;
-
-    const mobileBodyEn =
-`To,
-The Hon'ble Governor of Tamil Nadu,
-Governor Secretariat, Lok Bhavan – Tamil Nadu, Guindy, Chennai – 600022.
-
-Respected Governor,
-I, \${data.name}, in association with People For Animals (PFA), Tirunelveli, submit this urgent complaint regarding brutal attacks on street dogs, puppies, cows, night armed gangs, and barbaric torture of a mother dog in Melapalayam, Tirunelveli.
-
-Key Requests:
-1. High-level multi-department inquiry committee headed by District Collector
-2. Strict criminal action against iron-rod assaults, poisoning, and mother dog torture
-3. Additional patrol vehicles & intensive nocturnal vigilance for Melapalayam Police
-4. Permanent ABC sterilization & anti-rabies vaccination programme
-5. Community dialogue with Mosque Imams and Jamaat elders
-
-Sender Details:
-Name: \${data.name}
-Address: \${data.address}
-In association with People For Animals (PFA), Tirunelveli
-Contact: \${data.mobile || '—'}
-Date: \${data.date}
-Place: \${data.place}
-
-(A signed printed detailed petition is also being dispatched via India Post Speed Post)`;
-
-    const mBody = currentLang === 'ta' ? mobileBodyTa : mobileBodyEn;
-    const mailtoUri = 'mailto:' + encodeURIComponent(GOVERNOR_EMAIL)
-      + '?subject=' + encodeURIComponent(subject)
-      + '&body=' + encodeURIComponent(mBody);
-
-    incrementCounter();
-    window.location.href = mailtoUri;
-
-    $('emailSuccessBox').style.display = 'block';
-    $('emailSuccessBox').innerHTML = '📱 உங்கள் மொபைல் மின்னஞ்சல் செயலி (Gmail App) திறக்கப்படும். Send பொத்தானை அழுத்தவும்!';
+    // Mobile: mailto opens the phone's native Email app (Gmail / Samsung Mail / Apple Mail) with To & Subject
+    _activeMailUrl = 'mailto:' + encodeURIComponent(GOVERNOR_EMAIL)
+      + '?subject=' + encodeURIComponent(subject);
   } else {
-    // Desktop: Modal flow to avoid URL 413 error and allow clean copy-paste into Gmail Web
-    _desktopGmailURL = 'https://mail.google.com/mail/?view=cm&fs=1'
+    // Desktop: Gmail Web compose URL
+    _activeMailUrl = 'https://mail.google.com/mail/?view=cm&fs=1'
       + '&to=' + encodeURIComponent(GOVERNOR_EMAIL)
       + '&su=' + encodeURIComponent(subject);
+  }
 
-    $('modalLetter').value = fullBody;
-    $('emailModal').classList.add('open');
-    $('modalCopyBtn').textContent = '📋 படி 1: மனுவை Copy செய்';
+  // Populate modal with full letter
+  $('modalLetter').value = fullBody;
+  $('emailModal').classList.add('open');
+
+  // Attempt automatic clipboard copy right away
+  let autoCopied = false;
+  try {
+    await navigator.clipboard.writeText(fullBody);
+    autoCopied = true;
+  } catch(e) {}
+
+  if(autoCopied){
+    $('modalCopyBtn').textContent = '✅ முழு மனுவும் தானாக Copy செய்யப்பட்டது!';
+    $('modalCopyBtn').classList.add('copied');
+  } else {
+    $('modalCopyBtn').textContent = '📋 படி 1: முழு மனுவை Copy செய்';
     $('modalCopyBtn').classList.remove('copied');
   }
 });
@@ -711,21 +670,32 @@ $('modalCopyBtn').addEventListener('click', async ()=>{
     await navigator.clipboard.writeText(text);
     copied = true;
   } catch(e) {
+    $('modalLetter').focus();
     $('modalLetter').select();
     try { document.execCommand('copy'); copied = true; } catch(err){}
   }
-  $('modalCopyBtn').textContent = '✅ நகலெடுக்கப்பட்டது! இப்போது படி 2 அழுத்தவும்';
-  $('modalCopyBtn').classList.add('copied');
+  if(copied){
+    $('modalCopyBtn').textContent = '✅ நகலெடுக்கப்பட்டது! இப்போது படி 2 அழுத்தவும்';
+    $('modalCopyBtn').classList.add('copied');
+  } else {
+    alert('கீழே உள்ள உரைப்பெட்டியை அழுத்திப்பிடித்து Copy செய்யவும்.');
+  }
 });
 
 $('modalGmailBtn').addEventListener('click', ()=>{
-  window.open(_desktopGmailURL, '_blank');
   incrementCounter();
   $('emailModal').classList.remove('open');
   $('emailSuccessBox').style.display = 'block';
-  $('emailSuccessBox').innerHTML = '✅ Gmail திறக்கப்பட்டது! Message பகுதியில் <kbd style="background:#e8f0fe;border:1px solid #c2d7fe;padding:2px 6px;border-radius:4px;font-family:monospace">Ctrl + V</kbd> அழுத்தி Paste செய்து <b>Send</b> அழுத்தவும்.';
-});
 
+  const isMobile = /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  if(isMobile){
+    $('emailSuccessBox').innerHTML = '📱 <b>மின்னஞ்சல் செயலி திறக்கப்படுகிறது!</b><br>Email Message பகுதியில் விரலால் அழுத்திப்பிடித்து <b>Paste</b> செய்து <b>Send</b> அழுத்தவும்.';
+    window.location.href = _activeMailUrl;
+  } else {
+    $('emailSuccessBox').innerHTML = '✅ <b>Gmail திறக்கப்பட்டது!</b><br>Message பகுதியில் <kbd style="background:#e8f0fe;border:1px solid #c2d7fe;padding:2px 6px;border-radius:4px;font-family:monospace">Ctrl + V</kbd> அழுத்தி Paste செய்து <b>Send</b> அழுத்தவும்.';
+    window.open(_activeMailUrl, '_blank');
+  }
+});
 $('modalClose').addEventListener('click', ()=>{ $('emailModal').classList.remove('open'); });
 $('emailModal').addEventListener('click', (e)=>{ if(e.target === $('emailModal')) $('emailModal').classList.remove('open'); });
 
